@@ -22,45 +22,50 @@ const handleAsync = fn => async (req, res, next) => {
 };
 
 // --- Validators ---
-const customValidator = (conditionFn, statusCode, defaultMessage) =>
-  (value, res, customMessage) =>
-    conditionFn(value)
-      ? (res.status(statusCode).json({ error: customMessage || defaultMessage }), true)
-      : false;
+const customValidator = (
+  predicate,
+  statusCode,
+  defaultMessage,
+  value,
+  res,
+  customMessage
+) =>
+  predicate(value)
+    ? (res.status(statusCode).json({ error: customMessage || defaultMessage }), true)
+    : false;
 
-const validateObjectId = customValidator(
-  id => !mongoose.Types.ObjectId.isValid(id),
-  400,
-  "Invalid movie ID format"
-);
+const curryByBind = fn =>
+  fn.length === 0
+    ? fn()
+    : p => curryByBind(fn.bind(null, p));
 
-const respondIfEmpty = customValidator(
-  items => !items?.length,
-  404,
-  "No data found"
-);
+const curriedValidator = curryByBind(customValidator);
 
-const respondIfNotFound = customValidator(
-  item => !item,
-  404,
-  "Resource not found"
-);
+const validateObjectId = curriedValidator
+  (id => !mongoose.Types.ObjectId.isValid(id))
+  (400)
+  ("Invalid movie ID format");
+
+const respondIfEmptyOrNotFound = curriedValidator
+  (item => !(Array.isArray(item) ? item.length : item))
+  (404)
+  ("No data found");
 
 // --- Controller Logic ---
 const getAllMovies = handleAsync(async (req, res) => {
   const movies = await movieService.getAllMovies();
 
-  if (respondIfEmpty(movies, res, "No movies found")) return;
+  if (respondIfEmptyOrNotFound(movies)(res)("No movies found")) return;
 
   res.status(200).json({ message: "success", data: movies });
 });
 
 const getMovieById = handleAsync(async ({ params: { id } }, res) => {
-  if (validateObjectId(id, res)) return;
+  if (validateObjectId(id)(res)) return;
 
   const movie = await movieService.getMovieById(id);
 
-  if (respondIfNotFound(movie, res, `Movie ID ${id} not found`)) return;
+  if (respondIfEmptyOrNotFound(movie)(res)(`Movie ID ${id} not found`)) return;
 
   res.status(200).json({ message: "success", data: movie });
 });
@@ -68,7 +73,7 @@ const getMovieById = handleAsync(async ({ params: { id } }, res) => {
 const searchMovieByTitle = handleAsync(async ({ params: { title } }, res) => {
   const results = await movieService.searchMovieByTitle(title);
 
-  if (respondIfEmpty(results, res, "No movies found with that title")) return;
+  if (respondIfEmptyOrNotFound(results)(res)("No movies found with that title")) return;
 
   res.status(200).json({ message: "success", data: results });
 });
@@ -79,7 +84,7 @@ const searchMovieByYear = handleAsync(async ({ params: { year } }, res) => {
 
   const results = await movieService.searchMovieByYear(year);
 
-  if (respondIfEmpty(results, res, "No movies found from that year")) return;
+  if (respondIfEmpty(results)(res)("No movies found from that year")) return;
 
   res.status(200).json({ message: "success", data: results });
 });
@@ -87,27 +92,27 @@ const searchMovieByYear = handleAsync(async ({ params: { year } }, res) => {
 const saveMovie = handleAsync(async ({ body }, res) => {
   const saved = await movieService.saveMovie(body);
 
-  if (respondIfNotFound(saved, res, "No movies found to save")) return;
+  if (respondIfEmptyOrNotFound(saved)(res)("No movies found to save")) return;
 
   res.status(201).json({ message: "success", data: saved });
 });
 
 const updateMovieById = handleAsync(async ({ params: { id }, body }, res) => {
-  if (validateObjectId(id, res)) return;
+  if (validateObjectId(id)(res)) return;
 
   const updated = await movieService.updateMovieById(id, body);
 
-  if (respondIfNotFound(updated, res, "Movie not found for update")) return;
+  if (respondIfEmptyOrNotFound(updated)(res)("Movie not found for update")) return;
 
   res.status(200).json({ message: "success", data: updated });
 });
 
 const deleteMovieById = handleAsync(async ({ params: { id } }, res) => {
-  if (validateObjectId(id, res)) return;
+  if (validateObjectId(id)(res)) return;
 
   const deleted = await movieService.deleteMovieById(id);
 
-  if (respondIfNotFound(deleted, res, "Movie not found for deletion")) return;
+  if (respondIfEmptyOrNotFound(deleted)(res)("Movie not found for deletion")) return;
 
   res.status(200).json({ message: "success", data: deleted });
 });

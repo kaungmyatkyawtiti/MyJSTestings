@@ -34,7 +34,9 @@ const customValidator = (
     : false;
 
 const curryByBind = fn =>
-  fn.length === 0 ? fn() : p => curryByBind(fn.bind(null, p));
+  fn.length === 0
+    ? fn()
+    : p => curryByBind(fn.bind(null, p));
 
 // Curried version
 const curriedValidator = curryByBind(customValidator);
