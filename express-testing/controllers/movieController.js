@@ -41,13 +41,16 @@ const curryByBind = fn =>
 
 const curriedValidator = curryByBind(customValidator);
 
+const isInvalidObjectId = id => !mongoose.Types.ObjectId.isValid(id);
 const validateObjectId = curriedValidator
-  (id => !mongoose.Types.ObjectId.isValid(id))
+  (isInvalidObjectId)
   (400)
   ("Invalid movie ID format");
 
-const respondIfEmptyOrNotFound = curriedValidator
-  (item => !(Array.isArray(item) ? item.length : item))
+const isEmptyOrNotFound = data =>
+  data == null || (Array.isArray(data) && data.length === 0);
+const validateEmptyOrNotFound = curriedValidator
+  (isEmptyOrNotFound)
   (404)
   ("No data found");
 
@@ -55,133 +58,81 @@ const respondIfEmptyOrNotFound = curriedValidator
 const getAllMovies = handleAsync(async (req, res) => {
   const movies = await movieService.getAllMovies();
 
-  if (respondIfEmptyOrNotFound(movies)(res)("No movies found")) return;
+  if (validateEmptyOrNotFound(movies)(res)("No movies found")) return;
 
   res.status(200).json({ message: "success", data: movies });
 });
 
-const getMovieById = handleAsync(async ({ params: { id } }, res) => {
-  if (validateObjectId(id)(res)) return;
+const getMovieById = handleAsync(async (req, res) => {
+  const { movieId } = req.params;
 
-  const movie = await movieService.getMovieById(id);
+  if (validateObjectId(movieId)(res)) return;
 
-  if (respondIfEmptyOrNotFound(movie)(res)(`Movie ID ${id} not found`)) return;
+  const movie = await movieService.getMovieById(movieId);
+
+  if (validateEmptyOrNotFound(movie)(res)(`Movie ID ${movieId} not found`)) return;
 
   res.status(200).json({ message: "success", data: movie });
 });
 
-const searchMovieByTitle = handleAsync(async ({ params: { title } }, res) => {
-  const results = await movieService.searchMovieByTitle(title);
+const searchMovieByTitle = handleAsync(async (req, res) => {
+  const { movieTitle } = req.params;
 
-  if (respondIfEmptyOrNotFound(results)(res)("No movies found with that title")) return;
+  const results = await movieService.searchMovieByTitle(movieTitle);
+
+  if (validateEmptyOrNotFound(results)(res)("No movies found with that title")) return;
 
   res.status(200).json({ message: "success", data: results });
 });
 
-const searchMovieByYear = handleAsync(async ({ params: { year } }, res) => {
-  if (!/^\d{4}$/.test(year))
+const searchMovieByYear = handleAsync(async (req, res) => {
+  const { movieYear } = req.params;
+
+  if (!/^\d{4}$/.test(movieYear))
     return res.status(400).json({ error: "Invalid year format" });
 
-  const results = await movieService.searchMovieByYear(year);
+  const results = await movieService.searchMovieByYear(movieYear);
 
-  if (respondIfEmpty(results)(res)("No movies found from that year")) return;
+  if (validateEmptyOrNotFound(results)(res)("No movies found from that year")) return;
 
   res.status(200).json({ message: "success", data: results });
 });
 
-const saveMovie = handleAsync(async ({ body }, res) => {
-  const saved = await movieService.saveMovie(body);
+const saveMovie = handleAsync(async (req, res) => {
+  const { movie } = req.body;
 
-  if (respondIfEmptyOrNotFound(saved)(res)("No movies found to save")) return;
+  const saved = await movieService.saveMovie(movie);
+
+  if (validateEmptyOrNotFound(saved)(res)("failed to save movie")) return;
 
   res.status(201).json({ message: "success", data: saved });
 });
 
-const updateMovieById = handleAsync(async ({ params: { id }, body }, res) => {
-  if (validateObjectId(id)(res)) return;
+const updateMovieById = handleAsync(async (req, res) => {
+  const { movieId } = req.params;
 
-  const updated = await movieService.updateMovieById(id, body);
+  if (validateObjectId(movieId)(res)) return;
 
-  if (respondIfEmptyOrNotFound(updated)(res)("Movie not found for update")) return;
+  const { movie } = req.body;
+
+  const updated = await movieService.updateMovieById(movieId, movie);
+
+  if (validateEmptyOrNotFound(updated)(res)("Movie not found for update")) return;
 
   res.status(200).json({ message: "success", data: updated });
 });
 
-const deleteMovieById = handleAsync(async ({ params: { id } }, res) => {
-  if (validateObjectId(id)(res)) return;
+const deleteMovieById = handleAsync(async (req, res) => {
+  const { movieId } = req.params;
 
-  const deleted = await movieService.deleteMovieById(id);
+  if (validateObjectId(movieId)(res)) return;
 
-  if (respondIfEmptyOrNotFound(deleted)(res)("Movie not found for deletion")) return;
+  const deleted = await movieService.deleteMovieById(movieId);
+
+  if (validateEmptyOrNotFound(deleted)(res)("Movie not found for deletion")) return;
 
   res.status(200).json({ message: "success", data: deleted });
 });
-
-///const getAllMovies = handleAsync(async (req, res) =>
-///  respondIfEmpty(await movieService.getAllMovies(), res, "No movies found")
-///    ? null
-///    : res.status(200).json({
-///      message: "success",
-///      data: await movieService.getAllMovies(),
-///    })
-///);
-///
-///const getMovieById = handleAsync(async ({ params: { id } }, res) =>
-///  validateObjectId(id, res)
-///    ? null
-///    : (await movieService.getMovieById(id)).pipe(movie =>
-///      respondIfNotFound(movie, res, `Movie ID ${id} not found`)
-///        ? null
-///        : res.status(200).json({ message: "success", data: movie })
-///    )
-///);
-///
-///const searchMovieByTitle = handleAsync(async ({ params: { title } }, res) =>
-///  respondIfEmpty(await movieService.searchMovieByTitle(title), res, "No movies found with that title")
-///    ? null
-///    : res.status(200).json({
-///      message: "success",
-///      data: await movieService.searchMovieByTitle(title),
-///    })
-///);
-///
-///const searchMovieByYear = handleAsync(async ({ params: { year } }, res) =>
-///  /^\d{4}$/.test(year)
-///    ? respondIfEmpty(await movieService.searchMovieByYear(year), res, "No movies found from that year")
-///      ? null
-///      : res.status(200).json({
-///        message: "success",
-///        data: await movieService.searchMovieByYear(year),
-///      })
-///    : res.status(400).json({ error: "Invalid year format" })
-///);
-///
-///const saveMovie = handleAsync(async ({ body }, res) =>
-///  res.status(201).json({
-///    message: "success",
-///    data: await movieService.saveMovie(body),
-///  })
-///);
-///
-///const updateMovieById = handleAsync(async ({ params: { id }, body }, res) =>
-///  validateObjectId(id, res)
-///    ? null
-///    : (await movieService.updateMovieById(id, body)).pipe(updated =>
-///      respondIfNotFound(updated, res, "Movie not found for update")
-///        ? null
-///        : res.status(200).json({ message: "success", data: updated })
-///    )
-///);
-///
-///const deleteMovieById = handleAsync(async ({ params: { id } }, res) =>
-///  validateObjectId(id, res)
-///    ? null
-///    : (await movieService.deleteMovieById(id)).pipe(deleted =>
-///      respondIfNotFound(deleted, res, "Movie not found for deletion")
-///        ? null
-///        : res.status(200).json({ message: "success", data: deleted })
-///    )
-///);
 
 // --- Export ---
 module.exports = {
