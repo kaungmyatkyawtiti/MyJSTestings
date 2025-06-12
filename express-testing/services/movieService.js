@@ -1,7 +1,7 @@
 const Movies = require("../models/Movie.js");
 
 const getAllMovies = async () => {
-  return Movies.find();
+  return Movies.fin();
 }
 
 const getMovieById = async (movieId) => {

@@ -81,4 +81,47 @@ const getReviewByMovieId = handleAsync(async (req, res, next) => {
   if (validateEmptyOrNotFound(review)(res)(`movieId ${movieId} is not found`)) return;
 
   res.status(200).json({ message: "success", data: review });
-})
+});
+
+const saveReview = handleAsync(async (req, res, nextx) => {
+  const review = req.body;
+
+  const newReview = await reviewService.saveReview(review);
+
+  res.status(200).json({ message: "success", data: newReview });
+});
+
+const updateReviewById = handleAsync(async (req, res, next) => {
+  const { reviewId } = req.params;
+
+  if (validateObjectId(reviewId)(res)) return;
+
+  const { review } = req.body;
+
+  const updated = await reviewService.updateReviewById(reviewId, review);
+
+  if (validateEmptyOrNotFound(updated)(res));
+
+  res.status(200).json({ message: "success", data: updated });
+});
+
+const deleteReviewById = handleAsync(async (req, res, next) => {
+  const { reviewId } = req.params;
+
+  if (validateObjectId(reviewId)(res)) return;
+
+  const deleted = await reviewService.deleteReviewById(reviewId);
+
+  if (validateEmptyOrNotFound(deleted)(res)(`reviewId ${reviewId} not found to dlelete`)) return;
+
+  re.status(200).json({ message: "success", data: deleted });
+});
+
+module.exports = {
+  getAllReviews,
+  getReviewById,
+  getReviewByMovieId,
+  saveReview,
+  updateReviewById,
+  deleteReviewById,
+}

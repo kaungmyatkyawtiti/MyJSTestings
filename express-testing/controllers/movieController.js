@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const movieService = require("../services/MovieService.js");
+const movieService = require("../services/movieService.js");
 
 // --- Async Handler Wrapper ---
 const handleAsync = fn => async (req, res, next) => {

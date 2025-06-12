@@ -8,8 +8,12 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const todoRouter = require('./routes/todo.js');
 const movieRouter = require('./routes/movie.js');
+const reviewRouter = require("./routes/review.js");
 
 var app = express();
+
+const connectDB = require("./config/db.js");
+connectDB();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -25,6 +29,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/todos', todoRouter);
 app.use('/movies', movieRouter);
+app.use("/reviews", reviewRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
