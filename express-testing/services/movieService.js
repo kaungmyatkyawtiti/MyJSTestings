@@ -1,19 +1,27 @@
 const Movies = require("../models/Movie.js");
 
 const getAllMovies = async () => {
-  return Movies.fin();
+  return Movies.find();
 }
 
 const getMovieById = async (movieId) => {
   return Movies.findById(movieId);
 };
 
+//const searchMovieByTitle = async (movieTitle) => {
+//  return Movies.find({
+//    title: {
+//      $regex: movieTitle,
+//      $options: 'i' // this makes the search case-insensitive
+//    }
+//  });
+//}
 const searchMovieByTitle = async (movieTitle) => {
   return Movies.find({
     title: {
-      $regex: movieTitle,
+      $regex: new RegExp(movieTitle, 'i')
     }
-  })
+  });
 }
 
 const searchMovieByYear = async (year) => {
