@@ -28,16 +28,24 @@ const customValidator =
         ? (res.status(status).json({ error: customMessage || message }), true)
         : false;
 
-// const isInvalidObjectId = id => !mongoose.Types.ObjectId.isValid(id);
+// objectId validator 
+const isInvalid = id => !mongoose.Types.ObjectId.isValid(id);
+
 const validateObjectId = customValidator(
-  id => !mongoose.Types.ObjectId.isValid(id),
+  isInvalid,
   400,
   "Invalid movie ID format"
 );
 
-// const isEmpty = data => !(Array.isArray(data) ? data.length : data);
+// empty or not found validator
+const isEmpty =
+  data =>
+    data == null ||
+    (Array.isArray(data) && data.length === 0) ||
+    (typeof data === 'object' && Object.keys(data).length === 0);
+
 const validateEmptyOrNotFound = customValidator(
-  data => data == null || (Array.isArray(data) && data.length === 0),
+  isEmpty,
   404,
   "No data found"
 );
@@ -45,7 +53,8 @@ const validateEmptyOrNotFound = customValidator(
 const getAllReviews = handleAsync(async (req, res, next) => {
   const reviews = await reviewService.getAllReviews();
 
-  if (validateEmptyOrNotFound(reviews)(res)("No reviews fonnd")) return;
+  console.log("res ", res.status);
+  if (validateEmptyOrNotFound(reviews, res, "No reviews fonnd")) return;
 
   res.status(200).json({ message: "success", data: reviews });
 });
@@ -77,6 +86,8 @@ const getReviewByMovieId = handleAsync(async (req, res, next) => {
 const saveReview = handleAsync(async (req, res, nextx) => {
   const review = req.body;
 
+  if (validateEmptyOrNotFound(review, res, "no review found to save")) return;
+
   const newReview = await reviewService.saveReview(review);
 
   res.status(200).json({ message: "success", data: newReview });
@@ -89,9 +100,9 @@ const updateReviewById = handleAsync(async (req, res, next) => {
 
   const review = req.body;
 
-  const updated = await reviewService.updateReviewById(reviewId, review);
+  if (validateEmptyOrNotFound(review, res, "No review found to update")) return;
 
-  if (validateEmptyOrNotFound(updated, res, "No review found to update"));
+  const updated = await reviewService.updateReviewById(reviewId, review);
 
   res.status(200).json({ message: "success", data: updated });
 });
@@ -102,10 +113,10 @@ const deleteReviewById = handleAsync(async (req, res, next) => {
   if (validateObjectId(reviewId, res)) return;
 
   const deleted = await reviewService.deleteReviewById(reviewId);
+  console.log("deleted ", deleted);
+  if (validateEmptyOrNotFound(deleted, res, `reviewId ${reviewId} not found to delete`)) return;
 
-  if (validateEmptyOrNotFound(deleted, res, `reviewId ${reviewId} not found to dlelete`)) return;
-
-  re.status(200).json({ message: "success", data: deleted });
+  res.status(200).json({ message: "success", data: deleted });
 });
 
 module.exports = {

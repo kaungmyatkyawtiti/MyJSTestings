@@ -28,16 +28,24 @@ const customValidator =
         ? (res.status(status).json({ error: customMessage || message }), true)
         : false;
 
-// const isInvalidObjectId = id => !mongoose.Types.ObjectId.isValid(id);
+// objectId validator 
+const isInvalid = id => !mongoose.Types.ObjectId.isValid(id);
+
 const validateObjectId = customValidator(
-  id => !mongoose.Types.ObjectId.isValid(id),
+  isInvalid,
   400,
   "Invalid movie ID format"
 );
 
-// const isEmpty = data => !(Array.isArray(data) ? data.length : data);
+// empty or not found validator
+const isEmpty =
+  data =>
+    data == null ||
+    (Array.isArray(data) && data.length === 0) ||
+    (typeof data === 'object' && Object.keys(data).length === 0);
+
 const validateEmptyOrNotFound = customValidator(
-  data => data == null || (Array.isArray(data) && data.length === 0),
+  isEmpty,
   404,
   "No data found"
 );
@@ -46,6 +54,7 @@ const validateEmptyOrNotFound = customValidator(
 const getAllTodos = handleAsync(async (req, res, next) => {
   const todos = await todoService.getAllTodos();
 
+  //  console.log("todos ", todos);
   // todos is empty or not
   if (validateEmptyOrNotFound(todos, res, "No todos found")) return;
 
@@ -57,7 +66,7 @@ const getTodoById = handleAsync(async (req, res, next) => {
   const { id: todoId } = req.params;
 
   // todoId is valid or not
-  if (validateObjectId(todoId)(res)) return;
+  if (validateObjectId(todoId, res)) return;
 
   const todo = await todoService.getTodoById(todoId);
 
@@ -87,9 +96,9 @@ const updateTodoById = handleAsync(async (req, res, next) => {
 
   const todo = req.body;
 
-  const updated = await todoService.updateTodoById(todoId, todo);
+  if (validateEmptyOrNotFound(todo, res, "No todo found for update")) return;
 
-  if (validateEmptyOrNotFound(updated, res, "No todo found for update")) return;
+  const updated = await todoService.updateTodoById(todoId, todo);
 
   res.status(200).json({ message: "success", data: updated });
 });

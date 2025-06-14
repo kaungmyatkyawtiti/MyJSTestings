@@ -29,17 +29,23 @@ const customValidator =
         ? (res.status(status).json({ error: customMessage || message }), true)
         : false;
 
+// object validator
+const isInvalid = id => !mongoose.Types.ObjectId.isValid(id);
+
 const validateObjectId = customValidator(
-  id => !mongoose.Types.ObjectId.isValid(id),
+  isInvalid,
   400,
   "Invalid movie ID format"
 );
 
+// empty or not found validator 
+const isEmptyOrNotFound = data =>
+  data == null ||
+  (Array.isArray(data) && data.length === 0) ||
+  (typeof data === 'object' && Object.keys(data).length === 0);
+
 const validateEmptyOrNotFound = customValidator(
-  data =>
-    data == null ||
-    (Array.isArray(data) && data.length === 0) ||
-    (typeof data === 'object' && Object.keys(data).length === 0),
+  isEmptyOrNotFound,
   404,
   "No data found"
 );
@@ -90,10 +96,10 @@ const searchMovieByYear = handleAsync(async (req, res) => {
 
 const saveMovie = handleAsync(async (req, res) => {
   const movie = req.body;
+  // console.log("movie", movie);
+  //  if (validateEmptyOrNotFound(movie, res, "no movie to save")) return;
 
   const saved = await movieService.saveMovie(movie);
-
-  if (validateEmptyOrNotFound(saved, res, "failed to save movie")) return;
 
   res.status(201).json({ message: "success", data: saved });
 });
