@@ -2,7 +2,7 @@ import styles from './Profile.module.css';
 
 export default function Profile({ profile }) {
   // console.log("props ", props)
-  console.log("profile ", profile);
+  // console.log("profile ", profile);
 
   return (
     <div className={styles.profile}>
@@ -14,7 +14,7 @@ export default function Profile({ profile }) {
         alt={profile.name}
       />
 
-      <div>{profile.name}</div>
+      <div className={styles['profile-name']}>{profile.name}</div>
 
       {/* {console.log("hello")} */}
     </div>
