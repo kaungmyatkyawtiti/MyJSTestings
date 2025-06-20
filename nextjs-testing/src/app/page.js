@@ -20,10 +20,16 @@ import AdminDashboard from "./components/conditional-rendering/AdminDashboard";
 import Dashboard from "./components/conditional-rendering/Dashboard";
 import Greeting from "./components/conditional-rendering/Greeting";
 import HookFormWithMUI from "./components/form/HookFormWithMUI";
+import SaleForm from "./components/form/SaleForm";
 import SimpleForm from "./components/form/SimpleForm";
 import SimpleHookForm from "./components/form/SimpleHookForm";
+import SimpleValidation from "./components/form/SimpleValidation";
+import YupExample from "./components/form/YupExample";
 import Item from "./components/list/Item";
-import TodoList from "./components/list/TodoList";
+// import TodoList from "./components/list/TodoList";
+import TodoList from "./components/TodoList";
+import CustomTab from "./components/tab/CustomTab";
+import CounterConditional from "./components/conditional-rendering/CounterConditional";
 
 export default function Home() {
   let profile1 = {
@@ -57,6 +63,8 @@ export default function Home() {
       "completed": false
     }
   ];
+
+  let tabs = ["Tab1", "Tab2", "Tab3"];
 
   return (
     <div>
@@ -142,7 +150,30 @@ export default function Home() {
       {/* <SimpleForm /> */}
 
       {/* <SimpleHookForm /> */}
-      <HookFormWithMUI />
+      {/* <HookFormWithMUI /> */}
+      {/* <SaleForm /> */}
+
+      {/* <SimpleValidation /> */}
+
+      {/* <YupExample /> */}
+
+      {/* <TodoList /> */}
+
+      {/* <CustomTab headers={tabs}> */}
+      {/*   <div> */}
+      {/*     <h1>Tab 1</h1> */}
+      {/*   </div> */}
+      {/**/}
+      {/*   <div> */}
+      {/*     <h1>Tab 2</h1> */}
+      {/*   </div> */}
+      {/**/}
+      {/*   <div> */}
+      {/*     <h1>Tab 3</h1> */}
+      {/*   </div> */}
+      {/* </CustomTab> */}
+
+      <CounterConditional />
     </div>
   );
 }

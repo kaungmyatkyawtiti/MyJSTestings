@@ -2,7 +2,12 @@ import { useForm, Controller } from "react-hook-form"
 import { Button, Grid, TextField } from "@mui/material";
 
 export default function HookFormWithMUI() {
-  const { control, handleSubmit } = useForm({
+  const {
+    control,
+    handleSubmit,
+    reset,
+    setValue,
+  } = useForm({
     defaultValues: {
       price: "",
       quantity: "",
@@ -35,6 +40,8 @@ export default function HookFormWithMUI() {
 
           <Grid size={12}>
             <Button type="submit" variant="outlined">Submit</Button>
+            <Button type="submit" variant="outlined" onClick={() => reset()}>Reset</Button>
+            <Button type="submit" variant="outlined" onClick={() => setValue("quantity", 100)}>Update</Button>
           </Grid>
         </Grid>
       </form>
