@@ -1,5 +1,5 @@
 import { useState } from "react"
-import Counter from "../Counter";
+import Counter from "./Counter.js";
 
 export default function CounterConditional() {
   const [showB, setShowB] = useState(true);

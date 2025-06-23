@@ -3,9 +3,9 @@
 //import styles from "./page.module.css";
 
 import Card from "./components/Card";
-import Counter from "./components/Counter";
-import CounterBatchUpdate from "./components/CounterBatchUpdate";
-import CounterWithoutState from "./components/CounterWithoutState";
+import Counter from "./components/counter/Counter";
+import CounterBatchUpdate from "./components/counter/CounterBatchUpdate";
+import CounterWithoutState from "./components/counter/CounterWithoutState";
 import EventPropagation from "./components/EventPropagation";
 import HelloWorld from "./components/HelloWorld";
 import Parent, { Child } from "./components/Parent";
@@ -29,7 +29,17 @@ import Item from "./components/list/Item";
 // import TodoList from "./components/list/TodoList";
 import TodoList from "./components/TodoList";
 import CustomTab from "./components/tab/CustomTab";
-import CounterConditional from "./components/conditional-rendering/CounterConditional";
+import CounterConditional from "./components/counter/CounterConditional";
+import CounterFancy from "./components/counter/CounterFancy";
+import DifferentPosition from "./components/counter/DifferentPosition";
+import IndexKeyProblem from "./components/IndexKeyProblem";
+import KeyWithIndexProblem from "./components/KeyWithIndexProblem";
+import SearchableProductTable from "./components/SearchableProductTable";
+import TaskList from "./components/task-list/TaskList";
+import ReducerCounter from "./components/reducer/ReducerCounter";
+import TaskListWithReducer from "./components/reducer/task-list/TaskListWithReducer";
+import WithoutContext from "./components/context/WithoutContext";
+import WithContext from "./components/context/WithContext";
 
 export default function Home() {
   let profile1 = {
@@ -173,7 +183,27 @@ export default function Home() {
       {/*   </div> */}
       {/* </CustomTab> */}
 
-      <CounterConditional />
+      {/* <CounterConditional /> */}
+
+      {/* <CounterFancy /> */}
+
+      {/* <DifferentPosition /> */}
+
+      {/* <IndexKeyProblem /> */}
+
+      {/* <KeyWithIndexProblem /> */}
+
+      {/* <SearchableProductTable /> */}
+
+      {/* <TaskList /> */}
+
+      {/* <ReducerCounter /> */}
+
+      {/* <TaskListWithReducer /> */}
+
+      {/* <WithoutContext /> */}
+
+      <WithContext />
     </div>
   );
 }
