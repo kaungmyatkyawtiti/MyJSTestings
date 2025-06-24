@@ -43,6 +43,7 @@ export default function CounterFancy() {
           ? (<Counter isFancy={true} />)
           : (<Counter isFancy={false} />)
       }
+      
       <label>
         <input
           type="checkbox"

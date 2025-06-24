@@ -1,6 +1,6 @@
 import { useReducer } from "react";
-import { TaskEntry } from "./TaskEntry";
-import { TaskItem } from "./TaskItem";
+import TaskItem from "./TaskItem";
+import TaskEntry from "./TaskEntry";
 
 let nextId = 3;
 
@@ -10,7 +10,7 @@ let initState = [
   { id: 3, title: "task 3", done: true },
 ];
 
-function taskListReducer(state, action) {
+export function taskListReducer(state, action) {
   switch (action.type) {
     case "ADD_TODO":
       return [...state, action.payload];
@@ -71,7 +71,6 @@ export default function TaskListWithReducer() {
           <TaskItem
             key={task.id}
             task={task}
-            onAdd={addTaskHandler}
             onEdit={editTaskHandler}
             onDelete={deleteTaskHandler} />
         )

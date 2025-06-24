@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export function TaskItem({ task, onEdit, onDelete }) {
+export default function TaskItem({ task, onEdit, onDelete }) {
   const [title, setTitle] = useState(task.title);
   const [editing, setEditing] = useState(false);
 

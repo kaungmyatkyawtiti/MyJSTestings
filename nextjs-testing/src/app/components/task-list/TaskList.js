@@ -120,7 +120,6 @@ export default function TaskList() {
           <TaskItem
             key={task.id}
             task={task}
-            onAdd={addTaskHandler}
             onEdit={editTaskHandler}
             onDelete={deleteTaskHandler} />
         )

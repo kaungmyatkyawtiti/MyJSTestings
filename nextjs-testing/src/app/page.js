@@ -40,6 +40,16 @@ import ReducerCounter from "./components/reducer/ReducerCounter";
 import TaskListWithReducer from "./components/reducer/task-list/TaskListWithReducer";
 import WithoutContext from "./components/context/WithoutContext";
 import WithContext from "./components/context/WithContext";
+import TaskListWithContextReducer from "./components/context/task-list/TaskListWithContextReducer";
+import WhyRef from "./components/ref/WhyRef";
+import FocusDemo from "./components/ref/FocusDemo";
+import CounterWithEffect from "./components/effect/CounterWithEffect";
+import VideoPlayer from "./components/effect/VideoPlayer";
+import EffectOnlyOnce from "./components/effect/EffectOnlyOnce";
+import TimerWithCleanUp from "./components/effect/TimerWithCleanUp";
+import TodoListWithFetch from "./components/effect/TodoListWithFetch";
+import FetchUser from "./components/hook/FetchUser";
+import FetchDemo from "./components/hook/FetchDemo";
 
 export default function Home() {
   let profile1 = {
@@ -203,7 +213,27 @@ export default function Home() {
 
       {/* <WithoutContext /> */}
 
-      <WithContext />
+      {/* <WithContext /> */}
+
+      {/* <TaskListWithContextReducer /> */}
+
+      {/* <WhyRef /> */}
+
+      {/* <FocusDemo /> */}
+
+      {/* <CounterWithEffect /> */}
+
+      {/* <VideoPlayer /> */}
+
+      {/* <EffectOnlyOnce /> */}
+
+      {/* <TimerWithCleanUp /> */}
+
+      {/* <TodoListWithFetch /> */}
+
+      {/* <FetchDemo /> */}
+
+      <FetchUser />
     </div>
   );
 }

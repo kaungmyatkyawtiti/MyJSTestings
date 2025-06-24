@@ -1,19 +1,19 @@
 import { useState } from "react";
 
-export function TaskEntry({ onAdd }) {
-  const [task, setTask] = useState("");
+export default function TaskEntry({ onAdd }) {
+  const [title, setTitle] = useState("");
 
   const onAddHandler = () => {
-    onAdd(task);
-    setTask("");
+    onAdd(title);
+    setTitle("");
   }
 
   return (
     <div>
       <input
         type="text"
-        value={task}
-        onChange={(e) => setTask(e.target.value)} />
+        value={title}
+        onChange={(e) => setTitle(e.target.value)} />
       &nbsp;
       <button
         type="button"

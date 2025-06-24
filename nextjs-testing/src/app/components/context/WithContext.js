@@ -32,9 +32,9 @@ function GrandChild() {
 export default function WithContext() {
   return (
     <div>
-      <ThemeContext value={{ color: "blue" }}>
+      <ThemeContext.Provider value={{ color: "blue" }}>
         <Parent />
-      </ThemeContext>
+      </ThemeContext.Provider>
     </div>
   )
 }
