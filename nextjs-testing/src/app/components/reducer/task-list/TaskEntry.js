@@ -8,11 +8,19 @@ export default function TaskEntry({ onAdd }) {
     setTitle("");
   }
 
+  const handleKeyDown = (e) => {
+    // console.log(e.key);
+    if (e.key === "Enter") {
+      onAddHandler();
+    }
+  };
+
   return (
     <div>
       <input
         type="text"
         value={title}
+        onKeyDown={handleKeyDown}
         onChange={(e) => setTitle(e.target.value)} />
       &nbsp;
       <button

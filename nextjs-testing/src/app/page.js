@@ -50,6 +50,12 @@ import TimerWithCleanUp from "./components/effect/TimerWithCleanUp";
 import TodoListWithFetch from "./components/effect/TodoListWithFetch";
 import FetchUser from "./components/hook/FetchUser";
 import FetchDemo from "./components/hook/FetchDemo";
+import withLogger from "./components/pattern/hoc/withLogger";
+import AuthDemo from "./components/pattern/hoc/AuthDemo";
+import ComposeDemo from "./components/pattern/hoc/ComposeDemo";
+import RenderPropertyDemo from "./components/pattern/render-property/RenderPropertyDemo";
+
+const CounterWithLogger = withLogger(Counter);
 
 export default function Home() {
   let profile1 = {
@@ -233,7 +239,19 @@ export default function Home() {
 
       {/* <FetchDemo /> */}
 
-      <FetchUser />
+      {/* <FetchUser /> */}
+
+      {/* <ReducerCounter /> */}
+
+      {/* <TaskListWithReducer /> */}
+
+      {/* <CounterWithLogger /> */}
+
+      {/* <AuthDemo /> */}
+
+      {/* <ComposeDemo /> */}
+
+      <RenderPropertyDemo />
     </div>
   );
 }

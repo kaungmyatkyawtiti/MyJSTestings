@@ -1,12 +1,9 @@
 // Explicit is better than implicit *********
 
-import { useEffect, useState } from "react"
-import UseFetch from "./UseFetch";
-
-let url = "https://jsonplaceholder.org/users";
+import useFetch from "./useFetch";
 
 export default function FetchUser() {
-  const [loading, users] = UseFetch(url);
+  const [loading, users] = useFetch('https://jsonplaceholder.typicode.com/users');
 
   return (
     <div>

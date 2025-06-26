@@ -1,6 +1,7 @@
 import { useReducer } from "react";
 import TaskItem from "./TaskItem";
 import TaskEntry from "./TaskEntry";
+import useCustomReducer from "../../hook/useCustomReducer";
 
 let nextId = 3;
 
@@ -30,7 +31,9 @@ const newTask = title => (
 )
 
 export default function TaskListWithReducer() {
-  const [tasks, dispatch] = useReducer(taskListReducer, initState);
+  // const [tasks, dispatch] = useReducer(taskListReducer, initState);
+  const [tasks, dispatch] = useCustomReducer(taskListReducer, initState);
+
   // console.log("tasks ", tasks);
 
   const addTaskHandler = addTask => {

@@ -21,7 +21,9 @@ export default function SimpleHookForm() {
       {/* include validation with required or other standard HTML validation rules */}
       <input {...register("exampleRequired", { required: true })} />
       {/* errors will return when field validation fails  */}
-      {errors.exampleRequired && <span>This field is required</span>}
+      {
+        errors.exampleRequired && <span>This field is required</span>
+      }
 
       <input type="submit" />
     </form>

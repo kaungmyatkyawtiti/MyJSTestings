@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react"
-import UseFetch from "./UseFetch";
+import useFetch from "./useFetch";
 
 export default function FetchDemo() {
-  const [loading, todos] = UseFetch("https://jsonplaceholder.typicode.com/todos");
+  const [loading, todos] = useFetch("https://jsonplaceholder.typicode.com/todos");
 
   return (
     <div>
