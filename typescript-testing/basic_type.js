@@ -1,0 +1,12 @@
+var a = 10 + 3;
+console.log("typeof a", typeof a);
+var b = 4;
+console.log("typeof b", typeof b);
+// console.log("hello");
+var flag = true;
+var data = {};
+console.log("typeof data", typeof data);
+data = "hello";
+console.log("typeof data again", typeof data);
+var another;
+console.log("typeof another", typeof another);
