@@ -21,5 +21,13 @@ class Doctor extends Human {
 }
 
 type SomeConstructor = {
-  new(s: string): Human
+  new(str: string): Human
 }
+
+function fn(cntor: SomeConstructor) {
+  return new cntor("hello");
+}
+
+fn(Human);
+fn(Teacher);
+fn(Doctor);
