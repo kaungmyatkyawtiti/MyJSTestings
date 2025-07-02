@@ -1,4 +1,4 @@
-const add = (x: number) => (y: number) => x + y;
+let add = (x: number) => (y: number) => x + y;
 
 type CurriedFn = (x: number) => (y: number) => number;
 

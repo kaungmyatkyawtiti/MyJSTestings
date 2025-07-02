@@ -8,14 +8,14 @@ function MyTimer() {
     let timer = setInterval(() => {
       console.log("update time");
       setNow(new Date());
-    }, 1000); 
+    }, 1000);
 
     return () => {
       console.log("clean up");
       clearInterval(timer);
     }
   }, []);
-  
+
   return (
     <div>
       Timer
