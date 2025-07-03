@@ -1,14 +1,22 @@
 import type { Metadata } from "next";
 import { Counter } from "./components/counter/Counter";
 import Greeting from "./components/Greeting";
-import TodoList from "./components/TodoList";
+import TodoListDemo from "./components/todos/TodoListDemo";
+import OurCounter from "./components/OurCounter";
+import CounterWithReducer from "./components/CounterWithReducer";
+import CallBackDemo from "./components/CallBackDemo";
+import AcceptElementDemo from "./components/AcceptElementDemo";
 
 export default function IndexPage() {
   return (
     <div>
       {/* <Counter /> */}
       {/* <Greeting msg={"hello"} /> */}
-      <TodoList />
+      {/* <TodoListDemo /> */}
+      {/* <OurCounter /> */}
+      {/* <CounterWithReducer /> */}
+      {/* <CallBackDemo /> */}
+      <AcceptElementDemo />
     </div>
   )
 }
