@@ -6,6 +6,7 @@ import OurCounter from "./components/OurCounter";
 import CounterWithReducer from "./components/CounterWithReducer";
 import CallBackDemo from "./components/CallBackDemo";
 import AcceptElementDemo from "./components/AcceptElementDemo";
+import SimpleCounter from "./components/simplecounter/SimpleCounter";
 
 export default function IndexPage() {
   return (
@@ -16,7 +17,8 @@ export default function IndexPage() {
       {/* <OurCounter /> */}
       {/* <CounterWithReducer /> */}
       {/* <CallBackDemo /> */}
-      <AcceptElementDemo />
+      {/* <AcceptElementDemo /> */}
+      <SimpleCounter />
     </div>
   )
 }
