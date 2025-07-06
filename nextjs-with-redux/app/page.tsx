@@ -7,6 +7,7 @@ import CounterWithReducer from "./components/CounterWithReducer";
 import CallBackDemo from "./components/CallBackDemo";
 import AcceptElementDemo from "./components/AcceptElementDemo";
 import SimpleCounter from "./components/simplecounter/SimpleCounter";
+import TodoListWithRedux from "./components/todo/TodoListWithRedux";
 
 export default function IndexPage() {
   return (
@@ -18,7 +19,8 @@ export default function IndexPage() {
       {/* <CounterWithReducer /> */}
       {/* <CallBackDemo /> */}
       {/* <AcceptElementDemo /> */}
-      <SimpleCounter />
+      {/* <SimpleCounter /> */}
+      <TodoListWithRedux />
     </div>
   )
 }

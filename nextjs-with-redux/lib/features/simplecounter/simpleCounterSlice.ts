@@ -1,5 +1,5 @@
 import { AppThunk } from "@/lib/store";
-import { createSlice } from "@reduxjs/toolkit"
+import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
 export interface SimpleCounterState {
   count: number,
@@ -27,6 +27,9 @@ export const simpleCounterSlice = createSlice({
       state.count -= 1;
       // console.log("after dec", state.count);
     }),
+    incByAmount: create.reducer((state, action: PayloadAction<number>) => {
+      state.count += action.payload;
+    },),
   }),
   selectors: {
     selectCounter: state => state.count,
@@ -34,7 +37,7 @@ export const simpleCounterSlice = createSlice({
 })
 
 // export actions
-export const { inc, dec } = simpleCounterSlice.actions;
+export const { inc, dec, incByAmount } = simpleCounterSlice.actions;
 
 // export selectors
 export const { selectCounter } = simpleCounterSlice.selectors;
@@ -44,6 +47,6 @@ export const incAmountAfterSecond =
     (dispatch, getState) => {
       setTimeout(() => {
         console.log('Fired thunk');
-        dispatch(inc())
+        dispatch(incByAmount(amount));
       }, 1000);
     };
