@@ -1,5 +1,5 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"
-import { stat } from "fs";
+import { createAppSlice } from "@/lib/createAppSlice";
+import { PayloadAction } from "@reduxjs/toolkit"
 
 export interface TodoModel {
   id: number,
@@ -31,27 +31,48 @@ const initialState: TodoState = {
   ],
 }
 
-export const todoSlice = createSlice({
+export const todoSlice = createAppSlice({
   name: "todo",
   initialState,
   reducers: (create) => ({
     addTodo: create.reducer((state, action: PayloadAction<TodoModel>) => {
       state.todos.push(action.payload);
     }),
+    updateTodo: create.reducer((state, action: PayloadAction<TodoModel>) => {
+      state.todos = state.todos.map(todo => todo.id == action.payload.id ? action.payload : todo);
+    }),
     deleteTodo: create.reducer((state, action: PayloadAction<TodoModel>) => {
       // console.log("before delete", state.todos);
       state.todos = state.todos.filter(todo => todo.id != action.payload.id);
       // console.log("after delete", state.todos);
     }),
-    updateTodo: create.reducer((state, action: PayloadAction<TodoModel>) => {
-      state.todos = state.todos.map(todo => todo.id == action.payload.id ? action.payload : todo);
-    }),
+    loadAllTodos: create.asyncThunk(
+      async () => {
+        const response = await fetch('https://jsonplaceholder.typicode.com/todos')
+        const data = await response.json();
+        // console.log("data", data);
+        return data;
+      },
+      {
+        pending: (state) => {
+          // state.status = "loading";
+        },
+        fulfilled: (state, action) => {
+          console.log("payload", action.payload);
+          state.todos = action.payload;
+        },
+        rejected: (state) => {
+          // state.status = "failed";
+        },
+      },
+    ),
   }),
   selectors: {
     selectTodo: state => state.todos,
+    selectAllCompletedTodo: state => state.todos.filter(todo => todo.completed),
   }
 })
 
-export const { addTodo } = todoSlice.actions;
+export const { addTodo, updateTodo, deleteTodo, loadAllTodos } = todoSlice.actions;
 
-export const { selectTodo } = todoSlice.selectors;
+export const { selectTodo, selectAllCompletedTodo } = todoSlice.selectors;

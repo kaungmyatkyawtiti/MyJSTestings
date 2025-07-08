@@ -8,6 +8,7 @@ import CallBackDemo from "./components/CallBackDemo";
 import AcceptElementDemo from "./components/AcceptElementDemo";
 import SimpleCounter from "./components/simplecounter/SimpleCounter";
 import TodoListWithRedux from "./components/todo/TodoListWithRedux";
+import TodoListWithRTKQuery from "./components/todo/TodoListWithRTKQuery";
 
 export default function IndexPage() {
   return (
@@ -20,7 +21,8 @@ export default function IndexPage() {
       {/* <CallBackDemo /> */}
       {/* <AcceptElementDemo /> */}
       {/* <SimpleCounter /> */}
-      <TodoListWithRedux />
+      {/* <TodoListWithRedux /> */}
+      <TodoListWithRTKQuery />
     </div>
   )
 }
