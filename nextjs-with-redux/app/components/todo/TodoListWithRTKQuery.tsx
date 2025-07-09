@@ -1,6 +1,6 @@
 "use client";
 
-import { Todo, useGetAllTodosQuery } from "@/lib/features/todo-api/todoApiSlice"
+import { NewTodo, Todo, useDeleteTodoByIdMutation, useGetAllTodosQuery, useSaveTodoMutation, useUpdateTodoByIdMutation } from "@/lib/features/todo-api/todoApiSlice"
 import { useState } from "react";
 
 type TodoListApiProp = {
@@ -21,24 +21,25 @@ function handleEnterKey(
 }
 
 function TaskItem({ todo }: TodoItemProp) {
-  // const dispatch = useAppDispatch();
+  const [updateTodo, updateTodoResult] = useUpdateTodoByIdMutation();
+  const [deleteTodo, deleteTodoResult] = useDeleteTodoByIdMutation();
   const [text, setText] = useState(todo.title);
   const [editing, setEditing] = useState(false);
 
   const onEditHandler = () => {
     setEditing(!editing);
     if (editing) {
-      let updateTask = {
+      const updateTask: Todo = {
         ...todo,
         title: text
       }
       console.log('Update ', updateTask);
-      dispatch(updateTodo(updateTask));
+      updateTodo(updateTask);
     }
   }
 
   const onDeleteHandler = () => {
-    dispatch(deleteTodo(todo));
+    deleteTodo(todo._id);
   }
 
   return (
@@ -72,19 +73,17 @@ function TaskItem({ todo }: TodoItemProp) {
   )
 }
 
-let id = 3;
 export function TaskEntry() {
-  // const dispatch = useAppDispatch();
+  const [saveTodo, saveTodoResult] = useSaveTodoMutation();
   const [task, setTask] = useState('');
 
   const addHandler = () => {
     console.log('on add task ', task);
-    let newTodo: TodoModel = {
-      id: ++id,
+    let newTodo: NewTodo = {
       title: task,
       completed: false,
     }
-    dispatch(addTodo(newTodo));
+    saveTodo(newTodo);
     setTask('');
   }
 
@@ -133,7 +132,7 @@ export default function TodoListWithRTKQuery() {
       TodoListWithRTKQuery
       <TaskEntry />
       {
-        data && <TodoApiList todos={data.data} />
+        data && <TodoApiList todos={data} />
       }
       {
         !data && <p>No todos found.</p>
