@@ -17,10 +17,13 @@ export const todoApiSlice = createApi({
   reducerPath: "todoApi",
 
   endpoints: (build) => ({
-    getTodos: build.query<TodoApiResponse, void>({
+    getAllTodos: build.query<TodoApiResponse, void>({
       query: () => `/todos`,
+    }),
+    getTodoById: build.query<TodoApiResponse, number>({
+      query: (id: number) => `/todos/${id}`
     }),
   }),
 })
 
-export const { useGetTodosQuery } = todoApiSlice;
+export const { useGetAllTodosQuery, useGetTodoByIdQuery } = todoApiSlice;
