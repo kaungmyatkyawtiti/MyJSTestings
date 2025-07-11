@@ -9,7 +9,7 @@ export const Nav = () => {
   const navItems = [
     { label: "Home", href: "/" },
     { label: "Dashboard", href: "/dashboard" },
-    { label: "Profile", href: "/profile" },
+    { label: "Login", href: "/login" },
     { label: "Movies", href: "/movies" },
   ];
 
