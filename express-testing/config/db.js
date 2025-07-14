@@ -1,13 +1,17 @@
+require("dotenv").config();
+
+const MONGODB_URL = process.env.MONGODB_URL;
+const DB_USERNAME = process.env.DB_USERNAME;
+const DB_PASSWORD = process.env.DB_PASSWORD;
+
 const mongoose = require("mongoose");
-const username = "nott_eucalyptus";
-const password = "kaungmyatkyaw@2003";
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(`mongodb://localhost:27017/react_10batch_test`, {
+    await mongoose.connect(MONGODB_URL, {
       "auth": {
-        "username": username,
-        "password": password,
+        "username": DB_USERNAME,
+        "password": DB_PASSWORD,
       },
       "authSource": "admin",
     });

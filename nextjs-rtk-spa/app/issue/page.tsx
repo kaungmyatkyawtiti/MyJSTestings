@@ -1,5 +1,5 @@
 export default function Page() {
-  let str = null;
+  let str = "null";
 
   return (
     <div>

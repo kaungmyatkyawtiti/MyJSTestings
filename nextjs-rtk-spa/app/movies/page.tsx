@@ -1,38 +1,35 @@
 'use client';
 
-import { Box, Button, Typography } from "@mui/material";
-import { useRouter } from "next/navigation";
+import MovieList from "./components/MovieList";
+import { Movie } from "./types/movies";
+
+let movies: Movie[] = [
+  {
+    "_id": "684a964b5749dd65e7b29990",
+    "title": "Inception 3",
+    "director": {
+      "name": "Christopher Nolan",
+      "phoneNo": "123-456-7890",
+      "_id": "684bcd34b758682478c9a5d7"
+    },
+    "year": 2019
+  },
+  {
+    "_id": "684b1fd39bf638816f8e959d",
+    "title": "Inception",
+    "director": {
+      "name": "Christopher Nolan",
+      "phoneNo": "123-456-7890",
+      "_id": "684b1fd39bf638816f8e959e"
+    },
+    "year": 2010,
+  }
+]
 
 export default function Page() {
-  const movies: string[] = ["Avatar", "Matrix", "Titanic"];
-  const router = useRouter();
-
-  const btnDetailHandler = (index: number) => {
-    console.log("Go to movie", index);
-    router.push(`/movies/${index}`);
-  }
-
   return (
     <div>
-      This is Movie Page
-      {
-        movies.map((movie, index) =>
-          <Box key={index} sx={{ m: 1 }}>
-            <Typography
-              variant="overline"
-              sx={{ mr: 1 }}>
-              {movie}
-            </Typography>
-            <Button
-              type="button"
-              variant="outlined"
-              size="small"
-              onClick={() => btnDetailHandler(index)}>
-              Detail
-            </Button>
-          </Box>
-        )
-      }
+      <MovieList movies={movies} />
     </div>
   )
 }

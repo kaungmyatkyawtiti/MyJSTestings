@@ -1,5 +1,5 @@
 "use client";
-import { AppBar, Box, Button, IconButton, Toolbar, Typography } from "@mui/material";
+import { AppBar, Button, Toolbar, Typography } from "@mui/material";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -11,6 +11,7 @@ export const Nav = () => {
     { label: "Dashboard", href: "/dashboard" },
     { label: "Login", href: "/login" },
     { label: "Movies", href: "/movies" },
+    { label: "Blog", href: "/blog" },
   ];
 
   return (

@@ -1,5 +1,6 @@
 var createError = require('http-errors');
 var express = require('express');
+
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -18,7 +19,7 @@ const connectDB = require("./config/db.js");
 connectDB();
 
 // ✅ Enable CORS before routes
-app.use(cors({ origin: 'http://localhost:4000' }));
+app.use(cors());
 // Or allow all origins during development:
 // app.use(cors());
 

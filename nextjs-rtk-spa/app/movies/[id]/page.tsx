@@ -1,20 +1,12 @@
-import { redirect } from "next/navigation";
+'use client';
 
-interface MovieDetailPageProps {
-  params: Promise<{ id: string }>
-}
+import { useParams } from "next/navigation";
 
-export default async function MovieDetailPage({ params }: MovieDetailPageProps) {
-  const { id } = await params;
-
-  const movieId = parseInt(id, 10);
-  if (isNaN(movieId)) {
-    redirect("/login");
-  }
-
+export default function MovieDetailPage() {
+  const { id } = useParams<{ id: string }>();
   return (
     <div>
-      Movie Detail Page {movieId}
+      Movie Detail Page {id}
     </div>
   )
 }
