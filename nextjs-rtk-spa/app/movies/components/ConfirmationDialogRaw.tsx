@@ -1,0 +1,73 @@
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from "@mui/material";
+
+import {
+  HelpOutline as HelpOutlineIcon
+} from "@mui/icons-material";
+
+export interface ConfirmationDialogRawProps {
+  keepMounted: boolean;
+  message: string;
+  movieTitle: string;
+  open: boolean;
+  onClose: () => void;
+  okCallback: () => void;
+  cancelCallback: () => void;
+}
+
+export default function ConfirmationDialogRaw(props: ConfirmationDialogRawProps) {
+  const {
+    onClose,
+    message,
+    movieTitle,
+    open,
+    okCallback,
+    cancelCallback,
+    ...other
+  } = props;
+
+  const handleCancel = () => {
+    onClose();
+    cancelCallback();
+  };
+
+  const handleOk = () => {
+    onClose();
+    okCallback();
+  };
+
+  return (
+    <Dialog
+      sx={{ '& .MuiDialog-paper': { width: '80%', maxHeight: 435 } }}
+      maxWidth="xs"
+      open={open}
+      {...other}
+    >
+      <DialogTitle>
+        <Box display="flex" alignItems="center" gap={1}>
+          <Typography variant="h5" sx={{ flexGrow: 1 }}>
+            {movieTitle}
+          </Typography>
+          <HelpOutlineIcon fontSize="medium" sx={{ color: '#1976d2' }} />
+        </Box>
+      </DialogTitle>
+      <DialogContent>
+        {message}
+      </DialogContent>
+      <DialogActions>
+        <Button
+          autoFocus
+          color="error"
+          onClick={handleCancel}>
+          Cancel
+        </Button>
+        <Button
+          color="success"
+          onClick={handleOk}>
+          Ok
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+}
+
+
