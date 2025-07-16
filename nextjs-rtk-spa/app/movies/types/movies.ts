@@ -1,12 +1,12 @@
 export interface Director {
-  name: string,
-  phoneNo: string,
-  _id: string,
+  name: string;
+  phoneNo: string;
+  _id: string;
 }
 
 export interface Movie {
-  _id: string,
-  title: string,
-  director: Director,
-  year: number,
+  _id: string;
+  title: string;
+  director: Director;
+  year: number;
 }

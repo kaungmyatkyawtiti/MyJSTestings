@@ -2,7 +2,7 @@
 
 import { Box, Stack } from "@mui/material"
 import { Movie } from "../types/movies"
-import MovieCard from "./MovieCard"
+import InteractiveMovieCard from "./InteractiveMovieCard"
 import MovieEntry from "./MovieEntry";
 
 interface MovieListProps {
@@ -23,7 +23,7 @@ export default function MovieList({ movies }: MovieListProps) {
       {/* Movie Cards Section */}
       <Stack direction="row" spacing={2}>
         {
-          movies.map(movie => <MovieCard key={movie._id} movie={movie} />
+          movies.map(movie => <InteractiveMovieCard key={movie._id} movie={movie} />
           )
         }
       </Stack>

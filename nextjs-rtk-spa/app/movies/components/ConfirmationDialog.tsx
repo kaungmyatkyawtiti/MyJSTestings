@@ -10,29 +10,29 @@ export interface ConfirmationDialogRawProps {
   movieTitle: string;
   open: boolean;
   onClose: () => void;
-  okCallback: () => void;
-  cancelCallback: () => void;
+  onConfirm: () => void;
+  onCancel: () => void;
 }
 
-export default function ConfirmationDialogRaw(props: ConfirmationDialogRawProps) {
+export default function ConfirmationDialog(props: ConfirmationDialogRawProps) {
   const {
     onClose,
     message,
     movieTitle,
     open,
-    okCallback,
-    cancelCallback,
+    onConfirm,
+    onCancel,
     ...other
   } = props;
 
-  const handleCancel = () => {
-    onClose();
-    cancelCallback();
-  };
-
   const handleOk = () => {
     onClose();
-    okCallback();
+    onConfirm();
+  };
+
+  const handleCancel = () => {
+    onClose();
+    onCancel();
   };
 
   return (
