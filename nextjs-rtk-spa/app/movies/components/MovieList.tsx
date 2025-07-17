@@ -21,7 +21,13 @@ export default function MovieList({ movies }: MovieListProps) {
       <MovieEntry />
 
       {/* Movie Cards Section */}
-      <Stack direction="row" spacing={2}>
+      <Stack
+        direction="row"
+        spacing={2}
+        useFlexGap
+        flexWrap="wrap"
+        justifyContent="center" // or "center" 
+      >
         {
           movies.map(movie => <InteractiveMovieCard key={movie._id} movie={movie} />
           )

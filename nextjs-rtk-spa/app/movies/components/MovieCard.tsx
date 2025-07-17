@@ -1,10 +1,10 @@
-import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Stack, Typography } from "@mui/material";
+import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Typography } from "@mui/material";
 import { Movie } from "../types/movies";
 
 interface MovieCardProps {
   movie: Movie,
-  onDetailClick?: () => void;
-  onDelete?: () => void;
+  onDetailClick?: (movie: Movie) => void;
+  onDelete?: (movie: Movie) => void;
 }
 
 export default function MovieCard({
@@ -15,11 +15,15 @@ export default function MovieCard({
 
   return (
     <div>
-      <Card sx={{ maxWidth: 345 }}>
+      <Card
+        sx={{
+          width: 240,
+        }}
+      >
         {/* Make CardActionArea clickable for entire card except buttons */}
         <CardActionArea
-          onClick={onDetailClick ? () => onDetailClick() : undefined}
-          sx={{ cursor: !!onDetailClick ? 'pointer' : 'default' }}
+          onClick={onDetailClick ? () => onDetailClick(movie) : undefined}
+          sx={{ cursor: onDetailClick ? 'pointer' : 'default' }}
         >
           <CardMedia
             component="img"
@@ -54,17 +58,14 @@ export default function MovieCard({
           </CardContent>
         </CardActionArea>
         {
-          !!onDelete &&
+          onDelete &&
           <CardActions >
-            <Stack direction="row" spacing={1}>
-              <Button size="small" onClick={() => console.log("edit")}>Edit</Button>
-              <Button
-                size="small"
-                color="error"
-                onClick={onDelete}>
-                Delete
-              </Button>
-            </Stack>
+            <Button
+              size="medium"
+              color="error"
+              onClick={() => onDelete(movie)}>
+              Delete
+            </Button>
           </CardActions>
         }
       </Card>

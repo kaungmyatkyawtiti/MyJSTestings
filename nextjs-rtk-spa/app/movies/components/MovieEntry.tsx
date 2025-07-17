@@ -23,8 +23,10 @@ import * as yup from "yup"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { useForm } from "react-hook-form";
 import { InferType } from "yup";
+import { NewMovie, useSaveMovieMutation } from "@/lib/features/movie/moviesApiSlice";
 
 export default function MovieEntry() {
+  const [saveMovie, saveMovieResult] = useSaveMovieMutation();
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -58,6 +60,8 @@ export default function MovieEntry() {
 
   const onSubmit = (data: MovieFormData) => {
     console.log(data);
+    const newMovie: NewMovie = data;
+    saveMovie(newMovie);
     handleClose();
   }
 

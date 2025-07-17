@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Stack, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { Movie } from "../types/movies";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -24,13 +24,14 @@ export default function InteractiveMovieCard({ movie }: InteractiveMovieCardProp
     setOpen(false);
   };
 
-  const handleDetailClick = () => {
+  const handleDetailClick = (movie: Movie) => {
     console.log("click");
     router.push(`/movies/${movie._id}`);
   }
 
-  const handleDelete = () => {
+  const handleDelete = (movie: Movie) => {
     handleShowConfirmDialog();
+    console.log("movie", movie);
   }
 
   const handleDeleteConfirm = () => {

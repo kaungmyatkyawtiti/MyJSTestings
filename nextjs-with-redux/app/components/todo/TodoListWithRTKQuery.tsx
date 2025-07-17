@@ -125,6 +125,10 @@ export default function TodoListWithRTKQuery() {
     return <div>Error loading todos. Please try again.</div>;
   }
 
+  if (isSuccess && data?.length === 0) {
+    return <p>No movies found.</p>;
+  }
+
   console.log("api data", data);
 
   return (
@@ -133,9 +137,6 @@ export default function TodoListWithRTKQuery() {
       <TaskEntry />
       {
         data && <TodoApiList todos={data} />
-      }
-      {
-        !data && <p>No todos found.</p>
       }
     </div>
   )
