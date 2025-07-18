@@ -22,6 +22,7 @@ export default function ConfirmationDialog(props: ConfirmationDialogRawProps) {
     open,
     onConfirm,
     onCancel,
+    keepMounted,
     ...other
   } = props;
 
@@ -37,6 +38,7 @@ export default function ConfirmationDialog(props: ConfirmationDialogRawProps) {
 
   return (
     <Dialog
+      keepMounted={keepMounted}
       sx={{ '& .MuiDialog-paper': { width: '80%', maxHeight: 435 } }}
       maxWidth="xs"
       open={open}
@@ -69,5 +71,3 @@ export default function ConfirmationDialog(props: ConfirmationDialogRawProps) {
     </Dialog>
   );
 }
-
-

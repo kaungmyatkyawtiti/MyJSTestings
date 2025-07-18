@@ -74,8 +74,8 @@ export default function MovieEntry() {
         mb: 3 // margin-bottom for spacing below
       }}
     >
-      <Typography variant="h4" fontWeight="bold">
-        🎬 My Movies
+      <Typography variant="h6" fontWeight={500}>
+        📽️ ReelBox
       </Typography>
       <Button
         variant="contained"

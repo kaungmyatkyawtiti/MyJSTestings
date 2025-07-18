@@ -9,10 +9,6 @@ interface MovieListProps {
   movies: Movie[]
 }
 
-const btnAddMovieHandler = () => {
-  console.log("btn add movie");
-}
-
 export default function MovieList({ movies }: MovieListProps) {
   return (
     <Box sx={{ p: 3 }}>

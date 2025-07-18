@@ -2,6 +2,11 @@
 
 import { useGetAllMoviesQuery } from "@/lib/features/movie/moviesApiSlice";
 import MovieList from "./components/MovieList";
+import { Box, Button, CircularProgress, Stack, Typography } from "@mui/material";
+import {
+  Refresh as RefreshIcon
+} from "@mui/icons-material";
+import Loading from "../loading";
 
 // let movies: Movie[] = [
 //   {
@@ -27,10 +32,13 @@ import MovieList from "./components/MovieList";
 // ]
 
 export default function Page() {
-  const { data, isError, isLoading, isSuccess } = useGetAllMoviesQuery();
+  const { data, isError, isLoading, isSuccess, refetch, isFetching } = useGetAllMoviesQuery(undefined, {
+    pollingInterval: 30000,
+    skipPollingIfUnfocused: true,
+  });
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Loading />
   }
 
   if (isError) {
@@ -40,13 +48,39 @@ export default function Page() {
   if (isSuccess && data?.length === 0) {
     return <p>No movies found.</p>;
   }
+
+  const refreshHandler = () => {
+    console.log("refresh");
+    refetch();
+  }
   console.log("data", data);
 
   return (
-    <div>
+    <Box p={3}>
+      <Stack direction="row" justifyContent="space-between" alignItems="center" mb={2}>
+        <Typography variant="h4" fontWeight="bold">
+          🎬 My Movie Collections
+        </Typography>
+        <Button
+          variant="outlined"
+          size="small"
+          startIcon={
+            isFetching
+              ? <CircularProgress size={16} color="inherit" />
+              : <RefreshIcon />
+          }
+          onClick={refreshHandler}
+          sx={{
+            textTransform: 'none',
+            fontWeight: 500,
+          }}
+        >
+          {isFetching ? 'Refreshing...' : 'Refresh'}
+        </Button>
+      </Stack>
       {
         data && <MovieList movies={data} />
       }
-    </div>
+    </Box>
   )
 }

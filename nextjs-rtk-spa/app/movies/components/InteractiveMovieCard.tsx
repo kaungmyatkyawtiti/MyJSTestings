@@ -6,12 +6,15 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import ConfirmationDialog from "./ConfirmationDialog";
 import MovieCard from "./MovieCard";
+import { useDeleteMovieByIdMutation } from "@/lib/features/movie/moviesApiSlice";
 
 interface InteractiveMovieCardProps {
   movie: Movie;
 }
 
 export default function InteractiveMovieCard({ movie }: InteractiveMovieCardProps) {
+  const [deleteMovie, deleteMovieResult] = useDeleteMovieByIdMutation();
+
   const router = useRouter();
 
   const [open, setOpen] = useState(false);
@@ -34,8 +37,10 @@ export default function InteractiveMovieCard({ movie }: InteractiveMovieCardProp
     console.log("movie", movie);
   }
 
-  const handleDeleteConfirm = () => {
-    console.log("confirm");
+  const handleDeleteConfirm = (movieId: string) => {
+    console.log("confirm and deleteId is", movieId);
+    deleteMovie(movieId)
+      .then(data => console.log("successfully deleted", data));
   }
 
   const handleDeleteDecline = () => {
@@ -45,12 +50,12 @@ export default function InteractiveMovieCard({ movie }: InteractiveMovieCardProp
   return (
     <Box>
       <ConfirmationDialog
-        keepMounted
         open={open}
+        keepMounted={true}
         message={"are you sure to delete?"}
         movieTitle={movie.title}
         onClose={handleClose}
-        onConfirm={handleDeleteConfirm}
+        onConfirm={() => handleDeleteConfirm(movie._id)}
         onCancel={handleDeleteDecline}
       />
       <MovieCard

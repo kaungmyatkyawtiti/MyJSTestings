@@ -50,6 +50,13 @@ const validateEmptyOrNotFound = customValidator(
   "No data found"
 );
 
+// delay logic code
+const waitFor = async (ms) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(resolve, ms);
+  });
+}
+
 // --- Controller Logic ---
 const getAllMovies = handleAsync(async (req, res) => {
   const movies = await movieService.getAllMovies();
@@ -121,6 +128,7 @@ const updateMovieById = handleAsync(async (req, res) => {
 });
 
 const deleteMovieById = handleAsync(async (req, res) => {
+  await waitFor(5000);
   const { id: movieId } = req.params;
 
   if (validateObjectId(movieId, res)) return;
