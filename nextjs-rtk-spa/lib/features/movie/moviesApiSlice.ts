@@ -27,10 +27,10 @@ export const moviesApiSlice = createApi({
       transformResponse: (response: ApiResponse<Movie[]>, meta, arg) => response.data,
     }),
     saveMovie: build.mutation<Movie, NewMovie>({
-      query: (movie: Movie) => ({
+      query: (saveMovie: Movie) => ({
         url: `/movies`,
         method: 'POST',
-        body: movie,
+        body: saveMovie,
       }),
       // invalidatesTags: ['Movie'],
       // transformResponse: (response: ApiResponse<Movie>, meta, arg) => response.data,
@@ -72,13 +72,9 @@ export const moviesApiSlice = createApi({
       //       const { data: deletedMovie } = await queryFulfilled;
       //       patchResult = dispatch(
       //         moviesApiSlice.util.updateQueryData('getAllMovies', undefined, (draft) => {
-      //           // draft.filter(movie => movie._id != deletedMovie._id);
-      //           const index = draft.findIndex(movie => movie._id === deletedMovie._id);
-      //           if (index !== -1) {
-      //             draft.splice(index, 1);
-      //           }
-      //           console.log('Draft ', draft);
-      //           //return draft;
+      //         
+      //            draft = draft.filter(item => item._id != movieId);
+      //            return draft;
       //         }),
       //       );
       //       console.log('Deleted Movie', deletedMovie);
@@ -95,10 +91,9 @@ export const moviesApiSlice = createApi({
 
         const patchResult = dispatch(
           moviesApiSlice.util.updateQueryData('getAllMovies', undefined, (draft) => {
-            const index = draft.findIndex(item => item._id === movieId);
-            if (index !== -1) {
-              draft.splice(index, 1);
-            }
+
+            draft = draft.filter(item => item._id != movieId);
+            return draft;
           }),
         );
         try {
@@ -110,6 +105,34 @@ export const moviesApiSlice = createApi({
       },
       transformResponse: (response: ApiResponse<Movie>, meta, arg) => response.data,
     }),
+    updateMovieById: build.mutation<Movie, Movie>({
+      query: (updateMovie: Movie) => ({
+        url: `/movies/${updateMovie._id}`,
+        method: 'PUT',
+        body: updateMovie,
+      }),
+
+      // Optimistic Update
+      async onQueryStarted(movie: Movie, { dispatch, queryFulfilled }) {
+        console.log('movie to update', movie);
+
+        const patchResult = dispatch(
+          moviesApiSlice.util.updateQueryData('getAllMovies', undefined, (draft) => {
+
+            draft = draft.map(item => item._id == movie._id ? movie : item);
+            return draft;
+          }),
+        );
+        try {
+          const { data: updatedMovie } = await queryFulfilled
+          console.log('successfully update movie', updatedMovie);
+        } catch (err) {
+          patchResult.undo();
+        }
+      },
+      transformResponse: (response: ApiResponse<Movie>, meta, arg) => response.data,
+    }),
+
   })
 })
 
@@ -117,4 +140,5 @@ export const {
   useGetAllMoviesQuery,
   useSaveMovieMutation,
   useDeleteMovieByIdMutation,
+  useUpdateMovieByIdMutation,
 } = moviesApiSlice;

@@ -17,7 +17,7 @@ export default function MovieCard({
     <div>
       <Card
         sx={{
-          width: 240,
+          width: onDetailClick ? 240 : '100%',
         }}
       >
         {/* Make CardActionArea clickable for entire card except buttons */}
@@ -30,7 +30,7 @@ export default function MovieCard({
             image="https://www.vintagemovieposters.co.uk/wp-content/uploads/2019/06/IMG_9698.jpeg"
             alt={movie.title}
             sx={{
-              height: 180,
+              height: 'auto',
               objectFit: 'cover',
             }}
           />
@@ -38,13 +38,17 @@ export default function MovieCard({
             <Typography
               variant="h6"
               component="div"
-              noWrap
+              noWrap={!!onDetailClick}
               sx={{ mb: 1 }}
             >
               {movie.title}
             </Typography>
 
-            <Typography variant="subtitle2" color="text.primary" sx={{ mb: 0.5 }}>
+            <Typography
+              variant="subtitle2"
+              color="text.primary"
+              noWrap={!!onDetailClick}
+              sx={{ mb: 0.5 }}>
               Director: {movie.director.name}
             </Typography>
 
@@ -69,6 +73,6 @@ export default function MovieCard({
           </CardActions>
         }
       </Card>
-    </div>
+    </div >
   )
 }

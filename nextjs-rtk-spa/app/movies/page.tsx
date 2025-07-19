@@ -33,7 +33,7 @@ import Loading from "../loading";
 
 export default function Page() {
   const { data, isError, isLoading, isSuccess, refetch, isFetching } = useGetAllMoviesQuery(undefined, {
-    pollingInterval: 30000,
+    pollingInterval: 300000,
     skipPollingIfUnfocused: true,
   });
 
