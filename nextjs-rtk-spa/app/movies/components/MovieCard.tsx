@@ -67,7 +67,9 @@ export default function MovieCard({
             <Button
               size="medium"
               color="error"
-              onClick={() => onDelete(movie)}>
+              onClick={() => onDelete(movie)}
+              aria-label="delete movie"
+              title="Delete movie">
               Delete
             </Button>
           </CardActions>

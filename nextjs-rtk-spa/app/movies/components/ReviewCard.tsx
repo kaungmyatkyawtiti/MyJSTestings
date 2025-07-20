@@ -6,7 +6,7 @@ import {
 
 export interface ReviewCardProps {
   review: Review;
-  onDelete: () => void;
+  onDelete: (review: Review) => void;
 }
 
 export default function ReviewCard({
@@ -35,7 +35,9 @@ export default function ReviewCard({
           <IconButton
             color="error"
             edge="start"
-            onClick={onDelete}>
+            onClick={() => onDelete(review)}
+            aria-label="delete review"
+            title="Delete review">
             <DeleteIcon />
           </IconButton>
         </Box>

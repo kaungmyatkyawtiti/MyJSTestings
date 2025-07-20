@@ -13,38 +13,50 @@ interface InteractiveMovieCardProps {
 }
 
 export default function InteractiveMovieCard({ movie }: InteractiveMovieCardProps) {
+
   const [deleteMovie, deleteMovieResult] = useDeleteMovieByIdMutation();
+
+  const [targetId, setTargetId] = useState<string | null>(null);
 
   const router = useRouter();
 
   const [open, setOpen] = useState(false);
 
-  const handleShowConfirmDialog = () => {
-    setOpen(true);
-  };
-
   const handleClose = () => {
     setOpen(false);
   };
 
-  const handleDetailClick = (movie: Movie) => {
-    console.log("click");
-    router.push(`/movies/${movie._id}`);
-  }
+  // const handleShowConfirmDialog = () => {
+  //   setOpen(true);
+  // };
+  // const handleDelete = (movie: Movie) => {
+  //   handleShowConfirmDialog();
+  //   console.log("movie", movie);
+  // }
+  //
+  // const handleDeleteConfirm = () => {
+  //   console.log("confirm and delete");
+  //   deleteMovie(movie._id)
+  //     .then(data => console.log("successfully deleted", data));
+  // }
 
   const handleDelete = (movie: Movie) => {
-    handleShowConfirmDialog();
-    console.log("movie", movie);
-  }
+    setTargetId(movie._id);
+    setOpen(true);
+  };
 
-  const handleDeleteConfirm = () => {
-    console.log("confirm and delete");
-    deleteMovie(movie._id)
+  const handleDeleteConfirm = (id: string) => {
+    deleteMovie(id)
       .then(data => console.log("successfully deleted", data));
-  }
+  };
 
   const handleDeleteDecline = () => {
     console.log("decline");
+  }
+
+  const handleDetailClick = (movie: Movie) => {
+    console.log("click");
+    router.push(`/movies/${movie._id}`);
   }
 
   return (
@@ -55,7 +67,7 @@ export default function InteractiveMovieCard({ movie }: InteractiveMovieCardProp
         message={"are you sure to delete?"}
         movieTitle={movie.title}
         onClose={handleClose}
-        onConfirm={() => handleDeleteConfirm()}
+        onConfirm={() => targetId && handleDeleteConfirm(targetId)}
         onCancel={handleDeleteDecline}
       />
       <MovieCard

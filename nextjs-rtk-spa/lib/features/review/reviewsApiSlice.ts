@@ -23,7 +23,7 @@ export const reviewsApiSlice = createApi({
     }),
 
     saveReview: build.mutation<Review, NewReview>({
-      query: (saveReview: Review) => ({
+      query: (saveReview: NewReview) => ({
         url: `/reviews`,
         method: 'POST',
         body: saveReview,
@@ -31,14 +31,12 @@ export const reviewsApiSlice = createApi({
 
       async onQueryStarted(review: Review, { dispatch, queryFulfilled }) {
         console.log("review to save", review);
-        let patchResult;
 
         try {
           const { data: savedReview } = await queryFulfilled;
-          patchResult = dispatch(
+          dispatch(
             reviewsApiSlice.util.updateQueryData("getReviewByMovieId", savedReview.movie, (draft) => {
               draft.push(savedReview);
-              console.log("Draft", draft);
             }),
           );
           console.log("saved Review", savedReview);

@@ -15,7 +15,10 @@ interface InteractiveReviewCardProps {
 export default function InteractiveReviewCard({
   review,
 }: InteractiveReviewCardProps) {
+
   const [deleteReview, deleteReviewResult] = useDeleteReviewByIdMutation();
+
+  const [targetReview, setTargetReview] = useState<Review | null>(null);
 
   const router = useRouter();
 
@@ -34,15 +37,15 @@ export default function InteractiveReviewCard({
   //   router.push(`/movies/${movie._id}`);
   // }
 
-  const handleDelete = () => {
-    handleShowConfirmDialog();
-    console.log("review", review);
-  }
+  const handleDelete = (review: Review) => {
+    setTargetReview(review);
+    setOpen(true);
+  };
 
-  const handleDeleteConfirm = () => {
-    console.log("confirm and delete");
-    deleteReview(review);
-  }
+  const handleDeleteConfirm = (review: Review) => {
+    deleteReview(review)
+      .then(data => console.log("successfully deleted", data));
+  };
 
   const handleDeleteDecline = () => {
     console.log("decline");
@@ -55,7 +58,7 @@ export default function InteractiveReviewCard({
         keepMounted={true}
         message={"are you sure to delete?"}
         onClose={handleClose}
-        onConfirm={() => handleDeleteConfirm()}
+        onConfirm={() => targetReview && handleDeleteConfirm(targetReview)}
         onCancel={handleDeleteDecline}
       />
       <ReviewCard
