@@ -112,6 +112,7 @@ const saveMovie = handleAsync(async (req, res) => {
 });
 
 const updateMovieById = handleAsync(async (req, res) => {
+  await waitFor(5000);
   const { id: movieId } = req.params;
 
   if (validateObjectId(movieId, res)) return;

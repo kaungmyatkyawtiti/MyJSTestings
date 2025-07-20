@@ -7,7 +7,7 @@ import {
 export interface ConfirmationDialogRawProps {
   keepMounted: boolean;
   message: string;
-  movieTitle: string;
+  movieTitle?: string;
   open: boolean;
   onClose: () => void;
   onConfirm: () => void;
@@ -47,7 +47,11 @@ export default function ConfirmationDialog(props: ConfirmationDialogRawProps) {
       <DialogTitle>
         <Box display="flex" alignItems="center" gap={1}>
           <Typography variant="h5" sx={{ flexGrow: 1 }}>
-            {movieTitle}
+            {
+              movieTitle
+                ? movieTitle
+                : "Delete this comment"
+            }
           </Typography>
           <HelpOutlineIcon fontSize="medium" sx={{ color: '#1976d2' }} />
         </Box>

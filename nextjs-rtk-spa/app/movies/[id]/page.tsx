@@ -1,8 +1,7 @@
 'use client';
 
 import { useGetAllMoviesQuery } from "@/lib/features/movie/moviesApiSlice";
-import { useParams, useRouter } from "next/navigation";
-import MovieCard from "../components/MovieCard";
+import { useParams, useRouter } from "next/navigation"; import MovieCard from "../components/MovieCard";
 import { Box, Button, IconButton, Typography } from "@mui/material";
 import {
   Movie as MovieIcon,
@@ -11,12 +10,14 @@ import {
 import { useState } from "react";
 import MovieFormDialog from "../components/MovieFormDialog";
 import { Movie } from "../types/movies";
+import ReviewBox from "../components/ReviewBox";
 
 export default function MovieDetailPage() {
   const router = useRouter();
   const { id } = useParams<{ id: string }>();
 
   const { movie } = useGetAllMoviesQuery(undefined, {
+    refetchOnMountOrArgChange: false,
     selectFromResult: ({ data }) => ({
       movie: data?.find(item => item._id === id),
     })
@@ -39,7 +40,7 @@ export default function MovieDetailPage() {
 
   const backHandler = () => {
     console.log("back");
-    router.push("/movies");
+    router.back();
   }
 
   return (
@@ -75,6 +76,8 @@ export default function MovieDetailPage() {
           >
             Edit
           </Button>
+
+          <ReviewBox id={id} />
         </Box>
         <MovieFormDialog
           open={open}

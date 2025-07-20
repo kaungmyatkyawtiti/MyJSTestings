@@ -15,12 +15,31 @@ import { useForm } from "react-hook-form";
 import { InferType } from "yup";
 import { NewMovie, useSaveMovieMutation, useUpdateMovieByIdMutation } from "@/lib/features/movie/moviesApiSlice";
 import { Movie } from "../types/movies";
+import { useMemo } from "react";
 
 interface MovieFormDialogProps {
   open: boolean;
   onClose: () => void;
   movieToEdit?: Movie;
 }
+
+const movieSchema = yup
+  .object({
+    title: yup.string().required("movie title is required"),
+    director: yup.object({
+      name: yup.string().required("director name is required"),
+      phoneNo: yup.string().required("director phoneNo is required")
+    }),
+    year: yup
+      .number()
+      .typeError("year must be number")
+      .positive("year must be positive number")
+      .integer("year must be integer")
+      .required("movie release year is required"),
+  })
+  .required()
+
+type MovieFormData = InferType<typeof movieSchema>
 
 export default function MovieFormDialog({
   open,
@@ -31,23 +50,14 @@ export default function MovieFormDialog({
 
   const [updateMovie, updateMovieResult] = useUpdateMovieByIdMutation();
 
-  let defaultValues: any = {};
-  if (movieToEdit) {
-    defaultValues = { ...movieToEdit };
-  }
+  // let defaultValues: any = {};
+  // if (movieToEdit) {
+  //   defaultValues = { ...movieToEdit };
+  // }
 
-  const movieSchema = yup
-    .object({
-      title: yup.string().required("movie title is required"),
-      director: yup.object({
-        name: yup.string().required("director name is required"),
-        phoneNo: yup.string().required("director phoneNo is required")
-      }),
-      year: yup.number().positive().integer().required("movie release year is required"),
-    })
-    .required()
-
-  type MovieFormData = InferType<typeof movieSchema>
+  const defaultValues = useMemo(() => {
+    return movieToEdit ? { ...movieToEdit } : {};
+  }, [movieToEdit]);
 
   const {
     register,
@@ -125,7 +135,6 @@ export default function MovieFormDialog({
             </Grid>
             <Grid size={12}>
               <TextField
-                autoFocus
                 margin="dense"
                 fullWidth
                 variant="standard"
@@ -137,7 +146,6 @@ export default function MovieFormDialog({
             </Grid>
             <Grid size={12}>
               <TextField
-                autoFocus
                 margin="dense"
                 fullWidth
                 variant="standard"
@@ -150,7 +158,6 @@ export default function MovieFormDialog({
 
             <Grid size={12}>
               <TextField
-                autoFocus
                 margin="dense"
                 fullWidth
                 variant="standard"
@@ -169,6 +176,5 @@ export default function MovieFormDialog({
         </form>
       </DialogContent>
     </Dialog>
-
   )
 }

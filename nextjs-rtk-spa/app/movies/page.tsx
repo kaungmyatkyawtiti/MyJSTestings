@@ -32,10 +32,11 @@ import Loading from "../loading";
 // ]
 
 export default function Page() {
-  const { data, isError, isLoading, isSuccess, refetch, isFetching } = useGetAllMoviesQuery(undefined, {
-    pollingInterval: 300000,
-    skipPollingIfUnfocused: true,
-  });
+  const { data, isError, isLoading, isSuccess, refetch, isFetching } = useGetAllMoviesQuery();
+  // useGetAllMoviesQuery(undefined, {
+  //   pollingInterval: 300000,
+  //   skipPollingIfUnfocused: true,
+  // });
 
   if (isLoading) {
     return <Loading />

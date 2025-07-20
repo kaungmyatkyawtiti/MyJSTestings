@@ -50,6 +50,13 @@ const validateEmptyOrNotFound = customValidator(
   "No data found"
 );
 
+// delay logic code
+const waitFor = async (ms) => {
+  return new Promise((resolve, reject) => {
+    setTimeout(resolve, ms);
+  });
+}
+
 const getAllReviews = handleAsync(async (req, res, next) => {
   const reviews = await reviewService.getAllReviews();
 
@@ -108,6 +115,7 @@ const updateReviewById = handleAsync(async (req, res, next) => {
 });
 
 const deleteReviewById = handleAsync(async (req, res, next) => {
+  await waitFor(5000);
   const { id: reviewId } = req.params;
 
   if (validateObjectId(reviewId, res)) return;

@@ -1,19 +1,21 @@
 'use client';
 
 import { Box } from "@mui/material";
-import { Movie } from "../types/movies";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import ConfirmationDialog from "./ConfirmationDialog";
-import MovieCard from "./MovieCard";
-import { useDeleteMovieByIdMutation } from "@/lib/features/movie/moviesApiSlice";
+import ReviewCard from "./ReviewCard";
+import { Review } from "../types/reviews";
+import { useDeleteReviewByIdMutation } from "@/lib/features/review/reviewsApiSlice";
 
-interface InteractiveMovieCardProps {
-  movie: Movie;
+interface InteractiveReviewCardProps {
+  review: Review;
 }
 
-export default function InteractiveMovieCard({ movie }: InteractiveMovieCardProps) {
-  const [deleteMovie, deleteMovieResult] = useDeleteMovieByIdMutation();
+export default function InteractiveReviewCard({
+  review,
+}: InteractiveReviewCardProps) {
+  const [deleteReview, deleteReviewResult] = useDeleteReviewByIdMutation();
 
   const router = useRouter();
 
@@ -27,20 +29,19 @@ export default function InteractiveMovieCard({ movie }: InteractiveMovieCardProp
     setOpen(false);
   };
 
-  const handleDetailClick = (movie: Movie) => {
-    console.log("click");
-    router.push(`/movies/${movie._id}`);
-  }
+  // const handleDetailClick = (movie: Movie) => {
+  //   console.log("click");
+  //   router.push(`/movies/${movie._id}`);
+  // }
 
-  const handleDelete = (movie: Movie) => {
+  const handleDelete = () => {
     handleShowConfirmDialog();
-    console.log("movie", movie);
+    console.log("review", review);
   }
 
   const handleDeleteConfirm = () => {
     console.log("confirm and delete");
-    deleteMovie(movie._id)
-      .then(data => console.log("successfully deleted", data));
+    deleteReview(review);
   }
 
   const handleDeleteDecline = () => {
@@ -53,15 +54,14 @@ export default function InteractiveMovieCard({ movie }: InteractiveMovieCardProp
         open={open}
         keepMounted={true}
         message={"are you sure to delete?"}
-        movieTitle={movie.title}
         onClose={handleClose}
         onConfirm={() => handleDeleteConfirm()}
         onCancel={handleDeleteDecline}
       />
-      <MovieCard
-        movie={movie}
+      <ReviewCard
+        review={review}
         // onShowConfirmDialog={handleShowConfirmDialog}
-        onDetailClick={handleDetailClick}
+        // onDetailClick={handleDetailClick}
         onDelete={handleDelete}
       />
     </Box>

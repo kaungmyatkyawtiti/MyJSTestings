@@ -12,7 +12,8 @@ const getReviewByMovieId = async (movieId) =>
 
 const saveReview = async ({ movie, rating, review }) => {
   const saved = await new Reviews({ movie, rating, review }).save();
-  return saved.populate("movie");
+  // return saved.populate("movie");
+  return saved;
 };
 
 const updateReviewById = async (reviewId, review) => {

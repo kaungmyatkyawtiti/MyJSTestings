@@ -16,7 +16,7 @@ export const moviesApiSlice = createApi({
 
   reducerPath: "moviesApi",
 
-  refetchOnFocus: true,
+  // refetchOnFocus: true,
 
   tagTypes: ["Movie"],
 
@@ -26,6 +26,43 @@ export const moviesApiSlice = createApi({
       // providesTags: ['Movie'],
       transformResponse: (response: ApiResponse<Movie[]>, meta, arg) => response.data,
     }),
+
+    getMovieById: build.query<Movie, string>({
+      query: (movieId: string) => ({
+        url: `/movies/${movieId}`,
+        method: 'GET',
+      }),
+      // invalidatesTags: ['Movie'],
+      // transformResponse: (response: ApiResponse<Movie>, meta, arg) => response.data,
+
+      async onQueryStarted(movieId: string, { dispatch, queryFulfilled }) {
+        console.log('movieId to find', movieId);
+        let patchResult;
+
+        try {
+          const { data: getMovieById } = await queryFulfilled;
+          patchResult = dispatch(
+            moviesApiSlice.util.updateQueryData('getAllMovies', undefined, (draft) => {
+
+              const index = draft.findIndex((m) => m._id === getMovieById._id);
+
+              if (index !== -1) {
+                // Replace the existing movie
+                draft[index] = getMovieById;
+              } else {
+                // Add the new movie
+                draft.push(getMovieById);
+              }
+            }),
+          );
+          console.log('get Movie', getMovieById);
+        } catch (err) {
+          console.log('error is', err);
+        }
+      },
+      transformResponse: (response: ApiResponse<Movie>, meta, arg) => response.data,
+    }),
+
     saveMovie: build.mutation<Movie, NewMovie>({
       query: (saveMovie: Movie) => ({
         url: `/movies`,
@@ -105,6 +142,7 @@ export const moviesApiSlice = createApi({
       },
       transformResponse: (response: ApiResponse<Movie>, meta, arg) => response.data,
     }),
+
     updateMovieById: build.mutation<Movie, Movie>({
       query: (updateMovie: Movie) => ({
         url: `/movies/${updateMovie._id}`,
@@ -138,6 +176,7 @@ export const moviesApiSlice = createApi({
 
 export const {
   useGetAllMoviesQuery,
+  useGetMovieByIdQuery,
   useSaveMovieMutation,
   useDeleteMovieByIdMutation,
   useUpdateMovieByIdMutation,

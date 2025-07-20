@@ -3,6 +3,7 @@ import { combineSlices, configureStore } from "@reduxjs/toolkit";
 import { counterSlice } from "./features/counter/counterSlice";
 import { quotesApiSlice } from "./features/quotes/quotesApiSlice";
 import { moviesApiSlice } from "./features/movie/moviesApiSlice";
+import { reviewsApiSlice } from "./features/review/reviewsApiSlice";
 
 // `combineSlices` automatically combines the reducers using
 // their `reducerPath`s, therefore we no longer need to call `combineReducers`.
@@ -10,6 +11,7 @@ const rootReducer = combineSlices(
   counterSlice,
   quotesApiSlice,
   moviesApiSlice,
+  reviewsApiSlice,
 );
 // Infer the `RootState` type from the root reducer
 export type RootState = ReturnType<typeof rootReducer>;
@@ -26,7 +28,8 @@ export const makeStore = () => {
     middleware: (getDefaultMiddleware) => {
       return getDefaultMiddleware()
         .concat(quotesApiSlice.middleware)
-        .concat(moviesApiSlice.middleware);
+        .concat(moviesApiSlice.middleware)
+        .concat(reviewsApiSlice.middleware);
     },
   });
 };
