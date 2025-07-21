@@ -10,7 +10,10 @@ const handleAsync = fn => async (req, res, next) => {
 
     return error instanceof mongoose.Error.ValidationError
       ? res.status(400).json({
-        error: { message: error.message, name: error.name },
+        error: {
+          message: error.message,
+          name: error.name
+        },
       })
       : res.status(500).json({
         error: {
@@ -143,6 +146,7 @@ const deleteMovieById = handleAsync(async (req, res) => {
 
 // --- Export ---
 module.exports = {
+  handleAsync,
   getAllMovies,
   getMovieById,
   searchMovieByTitle,

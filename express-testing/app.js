@@ -4,7 +4,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+const auth = require("./middlewares/auth.js");
 var cors = require("cors");
 
 var indexRouter = require('./routes/index');
@@ -15,7 +15,7 @@ const reviewRouter = require("./routes/review.js");
 
 var app = express();
 
-const connectDB = require("./config/db.js");
+const connectDB = require("./config/database.js");
 connectDB();
 
 // ✅ Enable CORS before routes
@@ -34,8 +34,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/api/todos', todoRouter);
+// app.use('/users', usersRouter);
+app.use("/api/users", usersRouter);
+app.use('/api/todos', auth.verifyUserToken, todoRouter);
 app.use('/api/movies', movieRouter);
 app.use("/api/reviews", reviewRouter);
 

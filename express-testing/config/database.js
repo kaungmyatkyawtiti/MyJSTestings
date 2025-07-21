@@ -1,19 +1,19 @@
-require("dotenv").config();
-
-const MONGODB_URL = process.env.MONGODB_URL;
-const DB_USERNAME = process.env.DB_USERNAME;
-const DB_PASSWORD = process.env.DB_PASSWORD;
+const {
+  MONGODB_URL,
+  DB_USERNAME,
+  DB_PASSWORD,
+} = require("./env.js");
 
 const mongoose = require("mongoose");
 
 const connectDB = async () => {
   try {
     await mongoose.connect(MONGODB_URL, {
-      "auth": {
-        "username": DB_USERNAME,
-        "password": DB_PASSWORD,
+      auth: {
+        username: DB_USERNAME,
+        password: DB_PASSWORD,
       },
-      "authSource": "admin",
+      authSource: "admin",
     });
     console.log("connected to MnogoDB");
   } catch (error) {

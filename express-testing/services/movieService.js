@@ -16,6 +16,7 @@ const getMovieById = async (movieId) => {
 //    }
 //  });
 //}
+
 const searchMovieByTitle = async (movieTitle) => {
   return Movies.find({
     title: {
