@@ -67,7 +67,7 @@ const getReviewByMovieId = handleAsync(async (req, res, next) => {
 
   const review = await reviewService.getReviewByMovieId(movieId);
 
-  if (validateEmptyOrNotFound(review, res, `movieId ${movieId} is not found`)) return;
+  // if (validateEmptyOrNotFound(review, res, `movieId ${movieId} is not found`)) return;
 
   res.status(200).json({ message: "success", data: review });
 });
@@ -79,7 +79,7 @@ const saveReview = handleAsync(async (req, res, nextx) => {
 
   const newReview = await reviewService.saveReview(review);
 
-  res.status(200).json({ message: "success", data: newReview });
+  res.status(201).json({ message: "success", data: newReview });
 });
 
 const updateReviewById = handleAsync(async (req, res, next) => {

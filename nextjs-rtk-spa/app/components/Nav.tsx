@@ -7,8 +7,9 @@ export const Nav = () => {
   const pathname = usePathname();
 
   const navItems = [
-    { label: "Home", href: "/" },
     { label: "Login", href: "/login" },
+    { label: "Logut", href: "/logout" },
+    { label: "Home", href: "/" },
     { label: "Dashboard", href: "/dashboard" },
     { label: "Movies", href: "/movies" },
     { label: "Blog", href: "/blog" },
@@ -32,24 +33,26 @@ export const Nav = () => {
           sx={{ mr: 3, fontWeight: "bold" }}>
           MyApp
         </Typography>
-        {navItems.map(({ label, href }) => (
-          <Link key={href} href={href} passHref>
-            <Button
-              sx={{
-                color: pathname === href ? "#fff" : "#e0e0e0",
-                fontWeight: pathname === href ? "bold" : "normal",
-                backgroundColor: pathname === href ? "rgba(255,255,255,0.15)" : "transparent",
-                textTransform: "none",
-                marginX: 1,
-                "&:hover": {
-                  backgroundColor: "rgba(255,255,255,0.2)",
-                },
-              }}
-            >
-              {label}
-            </Button>
-          </Link>
-        ))}
+        {
+          navItems.map(({ label, href }) => (
+            <Link key={href} href={href} passHref>
+              <Button
+                sx={{
+                  color: pathname === href ? "#fff" : "#e0e0e0",
+                  fontWeight: pathname === href ? "bold" : "normal",
+                  backgroundColor: pathname === href ? "rgba(255,255,255,0.15)" : "transparent",
+                  textTransform: "none",
+                  marginX: 1,
+                  "&:hover": {
+                    backgroundColor: "rgba(255,255,255,0.2)",
+                  },
+                }}
+              >
+                {label}
+              </Button>
+            </Link>
+          ))
+        }
       </Toolbar>
     </AppBar>
   );

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export default function IndexPage() {
   return (
     <div>
-      Hello World
+      Welcome From Home
     </div>
   )
 }

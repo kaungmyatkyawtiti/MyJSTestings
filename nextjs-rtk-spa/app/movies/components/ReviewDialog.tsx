@@ -46,10 +46,16 @@ export default function ReviewDialog({
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<ReviewFormData>({
     resolver: yupResolver(reviewSchema),
   })
+
+  const clearForm = () => {
+    setRating(0);
+    reset();
+  }
 
   const onSubmit = (data: ReviewFormData) => {
     const payload = {
@@ -60,6 +66,7 @@ export default function ReviewDialog({
     console.log(payload);
     saveReview(payload);
     onClose();
+    clearForm();
   }
 
   return (

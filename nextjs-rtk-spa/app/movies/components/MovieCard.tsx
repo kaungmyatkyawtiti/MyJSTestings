@@ -3,8 +3,8 @@ import { Movie } from "../types/movies";
 
 interface MovieCardProps {
   movie: Movie,
-  onDetailClick?: (movie: Movie) => void;
-  onDelete?: (movie: Movie) => void;
+  onDetailClick?: () => void;
+  onDelete?: () => void;
 }
 
 export default function MovieCard({
@@ -22,7 +22,7 @@ export default function MovieCard({
       >
         {/* Make CardActionArea clickable for entire card except buttons */}
         <CardActionArea
-          onClick={onDetailClick ? () => onDetailClick(movie) : undefined}
+          onClick={onDetailClick ? onDetailClick : undefined}
           sx={{ cursor: onDetailClick ? 'pointer' : 'default' }}
         >
           <CardMedia
@@ -67,7 +67,7 @@ export default function MovieCard({
             <Button
               size="medium"
               color="error"
-              onClick={() => onDelete(movie)}
+              onClick={onDelete}
               aria-label="delete movie"
               title="Delete movie">
               Delete

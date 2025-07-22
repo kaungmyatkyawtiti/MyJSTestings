@@ -56,6 +56,7 @@ export default function InteractiveReviewCard({
       <ConfirmationDialog
         open={open}
         keepMounted={true}
+        title={"Delete this comment"}
         message={"are you sure to delete?"}
         onClose={handleClose}
         onConfirm={() => targetReview && handleDeleteConfirm(targetReview)}

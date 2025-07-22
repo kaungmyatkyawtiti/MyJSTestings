@@ -64,8 +64,8 @@ export default function InteractiveMovieCard({ movie }: InteractiveMovieCardProp
       <ConfirmationDialog
         open={open}
         keepMounted={true}
+        title={movie.title}
         message={"are you sure to delete?"}
-        movieTitle={movie.title}
         onClose={handleClose}
         onConfirm={() => targetId && handleDeleteConfirm(targetId)}
         onCancel={handleDeleteDecline}
@@ -73,8 +73,8 @@ export default function InteractiveMovieCard({ movie }: InteractiveMovieCardProp
       <MovieCard
         movie={movie}
         // onShowConfirmDialog={handleShowConfirmDialog}
-        onDetailClick={handleDetailClick}
-        onDelete={handleDelete}
+        onDetailClick={() => handleDetailClick(movie)}
+        onDelete={() => handleDelete(movie)}
       />
     </Box>
   )

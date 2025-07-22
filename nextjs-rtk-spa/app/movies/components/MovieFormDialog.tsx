@@ -62,6 +62,7 @@ export default function MovieFormDialog({
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<MovieFormData>({
     defaultValues,
@@ -73,6 +74,7 @@ export default function MovieFormDialog({
     const newMovie: NewMovie = data;
     if (!movieToEdit) {
       saveMovie(newMovie);
+      reset();
     } else {
       const updated: Movie = {
         _id: movieToEdit._id,

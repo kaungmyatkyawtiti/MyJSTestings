@@ -1,4 +1,6 @@
 import { Director, Movie } from "@/app/movies/types/movies";
+import { BASE_URL } from "@/lib/config";
+import { RootState } from "@/lib/store";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export interface ApiResponse<T> {
@@ -12,7 +14,18 @@ export type NewMovie = Omit<Movie, "_id" | "director"> & {
 };
 
 export const moviesApiSlice = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8080/api" }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: BASE_URL + "/api",
+    prepareHeaders: (headers, { getState }) => {
+
+      const state = (getState() as RootState);
+      //console.log('prepareHeaders State ', state);
+      if (state.auth.token) {
+        headers.set('Authorization', 'Bearer ' + state.auth.token);
+      }
+      return headers;
+    }
+  }),
 
   reducerPath: "moviesApi",
 

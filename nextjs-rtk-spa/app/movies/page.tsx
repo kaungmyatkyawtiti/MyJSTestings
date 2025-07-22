@@ -43,7 +43,7 @@ export default function Page() {
   }
 
   if (isError) {
-    return <div>Error loading todos. Please try again.</div>;
+    return <div>Error loading movies. Please try again.</div>;
   }
 
   if (isSuccess && data?.length === 0) {

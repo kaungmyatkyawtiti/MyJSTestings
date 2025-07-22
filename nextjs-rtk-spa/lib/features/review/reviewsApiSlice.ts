@@ -1,11 +1,26 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { ApiResponse } from "../movie/moviesApiSlice";
 import { Review } from "@/app/movies/types/reviews";
+import { BASE_URL } from "@/lib/config";
+import { RootState } from "@/lib/store";
 
 export type NewReview = Omit<Review, "_id">;
 
 export const reviewsApiSlice = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8080/api" }),
+  // baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8080/api" }),
+
+  baseQuery: fetchBaseQuery({
+    baseUrl: BASE_URL + "/api",
+    prepareHeaders: (headers, { getState }) => {
+
+      const state = (getState() as RootState);
+      //console.log('prepareHeaders State ', state);
+      if (state.auth.token) {
+        headers.set('Authorization', 'Bearer ' + state.auth.token);
+      }
+      return headers;
+    }
+  }),
 
   reducerPath: "reviewsApi",
 
