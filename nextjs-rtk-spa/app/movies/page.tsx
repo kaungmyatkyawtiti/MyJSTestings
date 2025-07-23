@@ -1,12 +1,13 @@
 'use client';
 
 import { useGetAllMoviesQuery } from "@/lib/features/movie/moviesApiSlice";
-import MovieList from "./components/MovieList";
 import { Box, Button, CircularProgress, Stack, Typography } from "@mui/material";
 import {
   Refresh as RefreshIcon
 } from "@mui/icons-material";
-import Loading from "../loading";
+import Loading from "@/app/loading";
+import IsAuth from "@/app/auth/IsAuth";
+import MovieList from "./components/MovieList";
 
 // let movies: Movie[] = [
 //   {
@@ -31,7 +32,7 @@ import Loading from "../loading";
 //   }
 // ]
 
-export default function Page() {
+function MoviePage() {
   const { data, isError, isLoading, isSuccess, refetch, isFetching } = useGetAllMoviesQuery();
   // useGetAllMoviesQuery(undefined, {
   //   pollingInterval: 300000,
@@ -85,3 +86,5 @@ export default function Page() {
     </Box>
   )
 }
+
+export default IsAuth(MoviePage);

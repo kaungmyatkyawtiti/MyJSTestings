@@ -6,8 +6,9 @@ import { useState } from "react";
 import { useAppDispatch } from "@/lib/hooks";
 import { logout } from "@/lib/features/auth/authSlice";
 import { redirect } from "next/navigation";
+import IsAuth from "../auth/IsAuth";
 
-export default function page() {
+function LogoutPage() {
   const dispatch = useAppDispatch();
 
   const [open, setOpen] = useState(false);
@@ -49,3 +50,5 @@ export default function page() {
     </Box>
   )
 }
+
+export default IsAuth(LogoutPage);

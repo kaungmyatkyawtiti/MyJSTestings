@@ -15,7 +15,7 @@ import { Controller, useForm } from "react-hook-form";
 import { InferType } from 'yup';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { login, selectAuthToken } from '@/lib/features/auth/authSlice';
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 
 const userSchema = yup.object({
@@ -32,12 +32,20 @@ type FormData = InferType<typeof userSchema>;
 
 export default function SignIn() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const redirectUrl = searchParams.get("redirectUrl");
+
   const dispatch = useAppDispatch();
   const authToken = useAppSelector(selectAuthToken);
 
   useEffect(() => {
     if (authToken) {
-      redirect("/");
+      if (redirectUrl) {
+        router.push(redirectUrl);
+      } else {
+        router.push("/");
+      }
     }
   }, []);
 
@@ -62,7 +70,12 @@ export default function SignIn() {
       .then(
         success => {
           console.log("success", success);
-          router.push("/");
+          // router.push("/");
+          if (redirectUrl) {
+            router.push(redirectUrl);
+          } else {
+            router.push("/");
+          }
         },
         error => {
           console.log("error", error);

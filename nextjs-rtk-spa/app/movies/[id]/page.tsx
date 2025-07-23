@@ -1,7 +1,8 @@
 'use client';
 
 import { useGetAllMoviesQuery } from "@/lib/features/movie/moviesApiSlice";
-import { useParams, useRouter } from "next/navigation"; import MovieCard from "../components/MovieCard";
+import { useParams, useRouter } from "next/navigation";
+import MovieCard from "../components/MovieCard";
 import { Box, Button, IconButton, Typography } from "@mui/material";
 import {
   Movie as MovieIcon,
@@ -11,8 +12,9 @@ import { useState } from "react";
 import MovieFormDialog from "../components/MovieFormDialog";
 import { Movie } from "../types/movies";
 import ReviewBox from "../components/ReviewBox";
+import IsAuth from "@/app/auth/IsAuth";
 
-export default function MovieDetailPage() {
+function MovieDetailPage() {
   const router = useRouter();
   const { id } = useParams<{ id: string }>();
 
@@ -88,3 +90,5 @@ export default function MovieDetailPage() {
     </Box>
   )
 }
+
+export default IsAuth(MovieDetailPage);
