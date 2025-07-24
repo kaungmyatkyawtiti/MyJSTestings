@@ -13,7 +13,7 @@ export default function MovieList({ movies }: MovieListProps) {
   return (
     <Box sx={{ p: 3 }}>
 
-      {/* New Mvoie From Section */}
+      {/* New Movie From Section */}
       <MovieEntry />
 
       {/* Movie Cards Section */}
@@ -25,8 +25,7 @@ export default function MovieList({ movies }: MovieListProps) {
         justifyContent="center" // or "center" 
       >
         {
-          movies.map(movie => <InteractiveMovieCard key={movie._id} movie={movie} />
-          )
+          movies.map(movie => <InteractiveMovieCard key={movie._id} movie={movie} />)
         }
       </Stack>
     </Box>

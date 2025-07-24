@@ -1,4 +1,4 @@
-import { Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Typography } from "@mui/material";
+import { Box, Button, Card, CardActionArea, CardActions, CardContent, CardMedia, Typography } from "@mui/material";
 import { Movie } from "../types/movies";
 
 interface MovieCardProps {
@@ -14,7 +14,7 @@ export default function MovieCard({
 }: MovieCardProps) {
 
   return (
-    <div>
+    <Box>
       <Card
         sx={{
           width: onDetailClick ? 240 : '100%',
@@ -22,8 +22,16 @@ export default function MovieCard({
       >
         {/* Make CardActionArea clickable for entire card except buttons */}
         <CardActionArea
-          onClick={onDetailClick ? onDetailClick : undefined}
-          sx={{ cursor: onDetailClick ? 'pointer' : 'default' }}
+          onClick={
+            onDetailClick
+              ? onDetailClick
+              : undefined
+          }
+          sx={{
+            cursor: onDetailClick
+              ? 'pointer'
+              : 'default'
+          }}
         >
           <CardMedia
             component="img"
@@ -52,7 +60,11 @@ export default function MovieCard({
               Director: {movie.director.name}
             </Typography>
 
-            <Typography variant="caption" color="text.secondary" display="block" sx={{ mb: 1 }}>
+            <Typography
+              variant="caption"
+              color="text.secondary"
+              display="block"
+              sx={{ mb: 1 }}>
               Contact: {movie.director.phoneNo}
             </Typography>
 
@@ -75,6 +87,6 @@ export default function MovieCard({
           </CardActions>
         }
       </Card>
-    </div >
+    </Box >
   )
 }

@@ -77,7 +77,11 @@ function MoviePage() {
             fontWeight: 500,
           }}
         >
-          {isFetching ? 'Refreshing...' : 'Refresh'}
+          {
+            isFetching
+              ? 'Refreshing...'
+              : 'Refresh'
+          }
         </Button>
       </Stack>
       {

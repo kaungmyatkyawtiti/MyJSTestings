@@ -125,7 +125,6 @@ export default function MovieFormDialog({
           <Grid container spacing={2}>
             <Grid size={12}>
               <TextField
-                autoFocus
                 margin="dense"
                 fullWidth
                 variant="standard"
