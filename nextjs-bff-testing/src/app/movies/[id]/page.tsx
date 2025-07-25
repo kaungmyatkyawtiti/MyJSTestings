@@ -1,10 +1,10 @@
-import getMovieById from "@/app/api/MovieApi";
 import { Box, Button, IconButton, Typography } from "@mui/material";
 import {
   Movie as MovieIcon,
   ArrowBack as ArrowBackIcon
 } from "@mui/icons-material";
 import MovieCard from "../components/MovieCard";
+import { getMovieById } from "@/app/api/MovieApi";
 
 interface MovieDetailsPageProps {
   params: Promise<{ id: string }>

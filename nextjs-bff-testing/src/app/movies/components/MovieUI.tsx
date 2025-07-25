@@ -1,7 +1,6 @@
 import { Box, Stack } from "@mui/material";
 import MovieCard from "./MovieCard";
 import { Movie } from "@/app/types/movies";
-import MovieEntry from "./MovieEntry";
 
 interface MovieUIProps {
   movies: Movie[];
@@ -12,12 +11,7 @@ export default async function MovieUI({
 }: MovieUIProps) {
 
   return (
-    <Box sx={{ p: 3 }}>
-
-      {/* New Movie From Section */}
-      <MovieEntry />
-
-      {/* Movie Cards Section */}
+    <Box sx={{ py: 3 }}>
       <Stack
         direction="row"
         spacing={2}

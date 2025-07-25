@@ -64,8 +64,6 @@ const waitFor = async (ms) => {
 const getAllMovies = handleAsync(async (req, res) => {
   const movies = await movieService.getAllMovies();
 
-  if (validateEmptyOrNotFound(movies, res, "No movies found")) return;
-
   res.status(200).json({ message: "success", data: movies });
 });
 

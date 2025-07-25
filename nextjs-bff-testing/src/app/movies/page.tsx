@@ -1,21 +1,11 @@
-import MovieUI from "./components/MovieUI";
 import { Box, Stack, Typography } from "@mui/material";
 import { getAllMovies } from "../api/MovieApi";
+import MovieEntry from "./components/MovieEntry";
+import MovieUI from "./components/MovieUI";
 
 export default async function MoviePage() {
   const movies = await getAllMovies();
   console.log(movies);
-
-  if (!movies || movies.length === 0) {
-    return (
-      <Typography
-        variant="h6"
-        align="center"
-        color="textSecondary">
-        No movies found.
-      </Typography>
-    )
-  }
 
   return (
     <Box p={3}>
@@ -47,7 +37,27 @@ export default async function MoviePage() {
 
       </Stack>
 
-      <MovieUI movies={movies} />
+      <Box sx={{ p: 3 }}>
+
+        <MovieEntry />
+
+        {
+          !movies || movies.length === 0
+            ?
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              minHeight="50vh" // or '100%' or '100vh' depending on context
+            >
+              <Typography variant="h6" color="textSecondary">
+                No movies found.
+              </Typography>
+            </Box>
+            :
+            <MovieUI movies={movies} />
+        }
+      </Box>
     </Box>
   )
 }

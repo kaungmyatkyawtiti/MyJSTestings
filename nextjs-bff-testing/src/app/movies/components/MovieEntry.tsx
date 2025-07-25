@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Box,
   Button,
@@ -7,9 +9,21 @@ import {
 import {
   Add as AddIcon
 } from "@mui/icons-material";
-import Link from "next/link";
+
+import { useState } from "react"
+import MovieFormDialog from "./MovieFormDialog";
+
 
 export default function MovieEntry() {
+  const [open, setOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <Box
@@ -23,22 +37,19 @@ export default function MovieEntry() {
       <Typography variant="h6" fontWeight={500}>
         📽️ ReelBox
       </Typography>
-
-      <Link
-        href={`/movies/new`}
-        style={{
-          textDecoration: "none",
-          color: "inherit"
-        }}>
-        <Button
-          variant="contained"
-          color="success"
-          size="small"
-          startIcon={<AddIcon />}
-        >
-          New Movie
-        </Button>
-      </Link>
+      <Button
+        variant="contained"
+        color="success"
+        size="small"
+        startIcon={<AddIcon />}
+        onClick={handleClickOpen}
+      >
+        New Movie
+      </Button>
+      <MovieFormDialog
+        open={open}
+        onClose={handleClose}
+      />
     </Box>
   )
 }
