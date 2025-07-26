@@ -1,7 +1,7 @@
 "use server";
 
 import * as z from "zod";
-import { NewMovie, saveMovie } from "../api/MovieApi";
+import { deleteMovieById, NewMovie, saveMovie } from "../api/MovieApi";
 import { revalidatePath } from "next/cache";
 
 // Schema for validation
@@ -14,10 +14,10 @@ const MovieSchema = z.object({
     .min(1, { message: 'Director name is required' }),
   directorPhoneNo: z
     .string()
-    .min(10, { message: 'Phone number must be at least 10 digits' }),
+    .min(10, { message: 'Phone number is required' }),
   year: z
     .coerce.number()
-    .min(1900)
+    .min(1900, 'Year is required')
     .max(new Date().getFullYear() + 5),
 });
 
@@ -28,16 +28,16 @@ interface State {
     directorPhoneNo?: string[];
     year?: string[];
   };
-  values?: {
-    title?: string;
-    directorName?: string;
-    directorPhoneNo?: string;
-    year?: string;
-  };
+  // values?: {
+  //   title?: string;
+  //   directorName?: string;
+  //   directorPhoneNo?: string;
+  //   year?: string;
+  // };
   message?: string | null;
 }
 
-export async function createMovie(
+export async function saveMovieAction(
   previousState: State | undefined, // <-- allow undefined!
   formData: FormData
 ): Promise<State> {
@@ -75,15 +75,28 @@ export async function createMovie(
         year: formFieldErrors?.year,
       },
     };
-  }
-  else {
+  } else {
     await saveMovie(movie);
     revalidatePath("/movies");
     return {
-      message: "Movie created successfully!",
+      message: "save movie successfully!",
     };
   }
 }
+
+export async function deleteMovieByIdAction(movieId: string) {
+  try {
+    await deleteMovieById(movieId);
+    revalidatePath("/movies");
+  } catch (e) {
+    console.error("Delete failed", e);
+  }
+}
+
+// export async function deleteMovieByIdAction(movieId: string): Promise<any> {
+//   await deleteMovieById(movieId);
+//   revalidatePath("/movies");
+// }
 
 // export async function createMovie(
 //   previousState: State | undefined,

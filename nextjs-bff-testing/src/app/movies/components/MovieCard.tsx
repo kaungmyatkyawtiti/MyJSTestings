@@ -7,20 +7,20 @@ import {
   CardMedia,
   Typography,
   CardActions,
-  Button,
 } from "@mui/material";
 import { Movie } from "@/app/types/movies";
+import DeleteMovie from "./DeleteMovie";
 
 interface MovieCardProps {
   movie: Movie;
-  showDeleteButton?: boolean;
   linkToDetail?: boolean;
+  onDelete?: () => void;
 }
 
 export default function MovieCard({
   movie,
-  showDeleteButton,
   linkToDetail,
+  onDelete,
 }: MovieCardProps) {
   const isLinked = !!linkToDetail;
 
@@ -98,19 +98,9 @@ export default function MovieCard({
             )}
 
         {
-          showDeleteButton && (
+          onDelete && (
             <CardActions>
-              <form action={`/movies/${movie._id}/delete`} method="POST" style={{ margin: 0 }}>
-                <Button
-                  type="submit"
-                  size="medium"
-                  color="error"
-                  aria-label="delete movie"
-                  title="Delete movie"
-                >
-                  Delete
-                </Button>
-              </form>
+              <DeleteMovie onDelete={onDelete} />
             </CardActions>
           )
         }

@@ -41,3 +41,13 @@ export async function saveMovie(movie: NewMovie): Promise<Movie> {
     throw error;
   }
 }
+
+export async function deleteMovieById(movieId: string): Promise<Movie> {
+  try {
+    const { data } = await axiosInstance.delete<ApiResponse<Movie>>(`api/movies/${movieId}`);
+    return data.data;
+  } catch (error) {
+    console.error("error fetching saveMovie", error);
+    throw error;
+  }
+}

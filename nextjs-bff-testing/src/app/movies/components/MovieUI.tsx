@@ -1,6 +1,6 @@
 import { Box, Stack } from "@mui/material";
-import MovieCard from "./MovieCard";
 import { Movie } from "@/app/types/movies";
+import InteractiveMovieCard from "./InterActiveMovieCard";
 
 interface MovieUIProps {
   movies: Movie[];
@@ -20,10 +20,9 @@ export default async function MovieUI({
         justifyContent="center" // or "center" 
       >
         {
-          movies.map(movie => <MovieCard
+          movies.map(movie => <InteractiveMovieCard
             key={movie._id}
             movie={movie}
-            showDeleteButton={true}
             linkToDetail={true}
           />
           )
