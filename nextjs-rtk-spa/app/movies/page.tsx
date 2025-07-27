@@ -8,6 +8,7 @@ import {
 import Loading from "@/app/loading";
 import IsAuth from "@/app/auth/IsAuth";
 import MovieList from "./components/MovieList";
+import MovieEntry from "./components/MovieEntry";
 
 // let movies: Movie[] = [
 //   {
@@ -26,11 +27,30 @@ import MovieList from "./components/MovieList";
 //     "director": {
 //       "name": "Christopher Nolan",
 //       "phoneNo": "123-456-7890",
-//       "_id": "684b1fd39bf638816f8e959e"
-//     },
+//       "_id": "684b1fd39bf638816f8e959e" },
 //     "year": 2010,
 //   }
 // ]
+
+type CenteredMessageProps = {
+  children: React.ReactNode;
+  color?: string;
+};
+
+const CenteredMessage = ({
+  children,
+  color
+}: CenteredMessageProps) => (
+  <Box
+    display="flex"
+    justifyContent="center"
+    alignItems="center"
+    minHeight="200px"
+    sx={{ px: 2, textAlign: 'center' }}
+  >
+    <Typography color={color}>{children}</Typography>
+  </Box>
+);
 
 function MoviePage() {
   const { data, isError, isLoading, isSuccess, refetch, isFetching } = useGetAllMoviesQuery();
@@ -38,18 +58,6 @@ function MoviePage() {
   //   pollingInterval: 300000,
   //   skipPollingIfUnfocused: true,
   // });
-
-  if (isLoading) {
-    return <Loading />
-  }
-
-  if (isError) {
-    return <div>Error loading movies. Please try again.</div>;
-  }
-
-  if (isSuccess && data?.length === 0) {
-    return <p>No movies found.</p>;
-  }
 
   const refreshHandler = () => {
     console.log("refresh");
@@ -84,9 +92,41 @@ function MoviePage() {
           }
         </Button>
       </Stack>
-      {
-        data && <MovieList movies={data} />
-      }
+
+      <Box sx={{ p: 3 }}>
+
+        {/* New Movie From Section */}
+        <MovieEntry />
+
+        {
+          isLoading && <Loading />
+        }
+
+        {
+          isError &&
+          <CenteredMessage color="error">
+            Error loading movies. Please try again.
+          </CenteredMessage>
+        }
+
+        {
+          isSuccess && data?.length === 0 &&
+          <CenteredMessage color="text.secondary">No movies found.</CenteredMessage>
+        }
+
+        {
+          isSuccess && data?.length > 0 &&
+          <Stack
+            direction="row"
+            spacing={2}
+            useFlexGap
+            flexWrap="wrap"
+            justifyContent="center"
+          >
+            <MovieList movies={data} />
+          </Stack>
+        }
+      </Box>
     </Box>
   )
 }

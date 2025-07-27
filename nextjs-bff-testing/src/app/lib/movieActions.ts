@@ -1,25 +1,8 @@
 "use server";
 
-import * as z from "zod";
 import { deleteMovieById, NewMovie, saveMovie } from "../api/MovieApi";
 import { revalidatePath } from "next/cache";
-
-// Schema for validation
-const MovieSchema = z.object({
-  title: z
-    .string()
-    .min(1, { message: 'Title is required' }),
-  directorName: z
-    .string()
-    .min(1, { message: 'Director name is required' }),
-  directorPhoneNo: z
-    .string()
-    .min(10, { message: 'Phone number is required' }),
-  year: z
-    .coerce.number()
-    .min(1900, 'Year is required')
-    .max(new Date().getFullYear() + 5),
-});
+import { movieSchema } from "../schema/movieSchema";
 
 interface State {
   errors?: {
@@ -44,7 +27,7 @@ export async function saveMovieAction(
 
   // const state = previousState ?? {};
   const movieFormData = Object.fromEntries(formData);
-  const validateMovieForm = MovieSchema.safeParse(movieFormData);
+  const validateMovieForm = movieSchema.safeParse(movieFormData);
 
   const getString = (value: FormDataEntryValue | null): string =>
     typeof value === "string" ? value : '';
@@ -84,7 +67,7 @@ export async function saveMovieAction(
   }
 }
 
-export async function deleteMovieByIdAction(movieId: string) {
+export async function deleteMovieByIdAction(movieId: string): Promise<void> {
   try {
     await deleteMovieById(movieId);
     revalidatePath("/movies");

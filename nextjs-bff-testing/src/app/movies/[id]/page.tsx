@@ -1,10 +1,11 @@
-import { Box, Button, IconButton, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import {
   Movie as MovieIcon,
-  ArrowBack as ArrowBackIcon
 } from "@mui/icons-material";
 import MovieCard from "../components/MovieCard";
 import { getMovieById } from "@/app/api/MovieApi";
+import EditMovie from "../components/EditMovie";
+import BackButton from "../components/BackButton";
 
 interface MovieDetailsPageProps {
   params: Promise<{ id: string }>
@@ -19,7 +20,6 @@ export default async function MovieDetailPage({
   const movie = await getMovieById(id);
 
   return (
-
     <Box
       display="flex"
       flexDirection="column"
@@ -29,12 +29,7 @@ export default async function MovieDetailPage({
     >
       <Box position="relative" width="100%" maxWidth={600}>
         <Box display="flex" alignItems="center" gap={1} mb={2}>
-          <IconButton
-            color="error"
-            edge="start"
-          >
-            <ArrowBackIcon />
-          </IconButton>
+          <BackButton />
           <MovieIcon fontSize="large" color="action" />
           <Typography variant="h5" fontWeight={600} color="text.secondary">
             Movie Details
@@ -42,7 +37,6 @@ export default async function MovieDetailPage({
         </Box>
 
         <Box position="relative">
-          {/* <MovieCard movie={movie ?? {} as Movie} /> */}
 
           {
             movie
@@ -62,21 +56,11 @@ export default async function MovieDetailPage({
                 </Typography>
               )
           }
-          <Button
-            variant="contained"
-            size="small"
-            sx={{ my: 2 }}
-          >
-            Edit
-          </Button>
+
+          <EditMovie movie={movie} />
 
           {/* <ReviewBox id={id} /> */}
         </Box>
-        {/* <MovieFormDialog */}
-        {/*   open={open} */}
-        {/*   onClose={handleClose} */}
-        {/*   movieToEdit={movie} */}
-        {/* /> */}
       </Box>
     </Box>
   )

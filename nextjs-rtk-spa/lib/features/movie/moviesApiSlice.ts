@@ -142,7 +142,7 @@ export const moviesApiSlice = createApi({
           moviesApiSlice.util.updateQueryData('getAllMovies', undefined, (draft) => {
 
             const index = draft.findIndex(item => item._id === movieId);
-            if (index !== 1) {
+            if (index !== -1) {
               draft.splice(index, 1);
             }
 

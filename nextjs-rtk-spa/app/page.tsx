@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
+import RequireAuth from "./components/RequireAuth";
 
 export default function IndexPage() {
   return (
-    <div>
-      Welcome From Home
-    </div>
+    <RequireAuth>
+      <div>Welcome From Home</div>
+    </RequireAuth>
   )
 }
 

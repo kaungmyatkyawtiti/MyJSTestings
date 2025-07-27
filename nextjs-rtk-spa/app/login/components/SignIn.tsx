@@ -89,7 +89,7 @@ export default function SignIn() {
       <Stack
         alignItems="center"
         justifyContent="center"
-        sx={{ minHeight: '100vh' }}>
+        sx={{ minHeight: '60vh' }}>
         <Card sx={{ maxWidth: 400, width: '100%', p: 4 }}>
           <Typography variant="h5" component="h1" gutterBottom>
             Login Your Account
