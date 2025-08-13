@@ -36,11 +36,15 @@ var Doctor = /** @class */ (function (_super) {
         console.log("Doctor constructor");
         return _this;
     }
+    Doctor.prototype.indroduce = function () {
+        console.log("hi, I'm ".concat(this.name));
+    };
     return Doctor;
 }(Human));
-function fn(cntor) {
-    return new cntor("hello");
+function fn(ctor) {
+    return new ctor("hello");
 }
 fn(Human);
 fn(Teacher);
-fn(Doctor);
+var doctor = fn(Doctor);
+doctor.indroduce();

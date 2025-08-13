@@ -18,16 +18,28 @@ class Doctor extends Human {
     super(name);
     console.log("Doctor constructor");
   }
+  indroduce() {
+    console.log(`hi, I'm ${this.name}`);
+  }
 }
 
-type SomeConstructor = {
-  new(str: string): Human
-}
+// type SomeConstructor<T> = {
+//   new(str: string): T;
+// }
+//
+// function fn<T>(ctor: SomeConstructor<T>): T {
+//   return new ctor("hello");
+// }
 
-function fn(cntor: SomeConstructor) {
-  return new cntor("hello");
+type SomeConstructor<T extends Human> = {
+  new(str: string): T;
+};
+
+function fn<T extends Human>(ctor: SomeConstructor<T>): T {
+  return new ctor("hello");
 }
 
 fn(Human);
 fn(Teacher);
-fn(Doctor);
+const doctor = fn(Doctor);
+doctor.indroduce();
