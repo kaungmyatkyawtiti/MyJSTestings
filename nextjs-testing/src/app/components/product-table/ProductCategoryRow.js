@@ -1,16 +1,14 @@
-import classNames from "classnames";
-
 function ProductItem({ item }) {
-  const itemClass = classNames({
-    "stocked": item.stocked
-  });
-
   return (
     <div>
-      <span className={itemClass}>
-        {item.name}&nbsp;
+      <span
+        style={{
+          color: item.stocked ? "red" : "black",
+        }}
+      >
+        {item.name}
       </span>
-      <span>{item.price}</span>
+      <span >{item.price}</span>
     </div>
   )
 }

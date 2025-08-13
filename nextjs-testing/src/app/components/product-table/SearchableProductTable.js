@@ -1,5 +1,6 @@
 import { useState } from "react"
 import ProductCategoryRow from './ProductCategoryRow';
+import { useRef } from 'react';
 
 let data = [
   { category: "Fruits", price: "$1", stocked: false, name: "Apple" },
@@ -40,37 +41,49 @@ export default function SearchableProductTable() {
     return matchesSearch && matchesInstock;
   });
 
+  const productRef = useRef();
+
   const handleSearch = (e) => {
-    setSearchText(e.target.value);
+    e.preventDefault();
+    const product = productRef.current.value;
+    console.log(product);
+    setSearchText(product);
+    e.currentTarget.reset();
+    document.activeElement?.blur();
   }
 
   const handleInStock = (e) => {
     console.log(e.target.checked);
     setInStock(e.target.checked);
+    document.activeElement?.blur();
   }
 
   return (
     <div style={{ maxWidth: 900, margin: "20px auto", padding: 10 }}>
       <h2>Product Table</h2>
-      <form>
+
+      <form onSubmit={handleSearch}>
         <div>
           <input
             type="text"
-            value={searchText}
-            placeholder='search product'
-            onChange={handleSearch} />
+            placeholder='search product...'
+            ref={productRef}
+          />
+          <button type='submit'>
+            Search
+          </button>
         </div>
+      </form >
+      <div>
+        <label>
+          <input
+            type="checkbox"
+            value={inStock}
+            onChange={handleInStock} />
+          Only show product is instocked
+        </label>
+      </div>
 
-        <div>
-          <label>
-            <input
-              type="checkbox"
-              value={inStock}
-              onChange={handleInStock} />
-            Only show product is instocked
-          </label>
-        </div>
-      </form>
       <br />
 
       {/* <br /> */}
