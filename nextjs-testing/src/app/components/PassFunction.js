@@ -3,7 +3,11 @@ import { useState } from "react";
 function ChildButton({ onCallback }) {
   return (
     <div>
-      <button type="button" onClick={onCallback}>Inc</button>
+      <button
+        type="button"
+        onClick={onCallback}>
+        Inc
+      </button>
     </div>
   )
 }
@@ -11,7 +15,7 @@ function ChildButton({ onCallback }) {
 export default function PassFunction() {
   let [count, setCount] = useState(0);
 
-  const callbackHandler = () => {
+  const handleCallBack = () => {
     console.log("callback from parent");
     setCount(++count);
   }
@@ -19,7 +23,7 @@ export default function PassFunction() {
   return (
     <div>
       Parent Counter: {count}
-      <ChildButton onCallback={callbackHandler} />
+      <ChildButton onCallback={handleCallBack} />
     </div>
   )
 }

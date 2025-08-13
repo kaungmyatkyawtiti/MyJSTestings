@@ -3,7 +3,7 @@
 //import styles from "./page.module.css";
 
 import Card from "./components/Card";
-import Counter from "./components/counter/Counter";
+// import Counter from "./components/counter/Counter";
 import CounterBatchUpdate from "./components/counter/CounterBatchUpdate";
 import CounterWithoutState from "./components/counter/CounterWithoutState";
 import EventPropagation from "./components/EventPropagation";
@@ -27,14 +27,14 @@ import SimpleValidation from "./components/form/SimpleValidation";
 import YupExample from "./components/form/YupExample";
 import Item from "./components/list/Item";
 // import TodoList from "./components/list/TodoList";
-import TodoList from "./components/TodoList";
+import TodoList from "./components/todo-list/TodoList";
 import CustomTab from "./components/tab/CustomTab";
 import CounterConditional from "./components/counter/CounterConditional";
 import CounterFancy from "./components/counter/CounterFancy";
 import DifferentPosition from "./components/counter/DifferentPosition";
 import IndexKeyProblem from "./components/IndexKeyProblem";
 import KeyWithIndexProblem from "./components/KeyWithIndexProblem";
-import SearchableProductTable from "./components/SearchableProductTable";
+import SearchableProductTable from "./components/product-table/SearchableProductTable";
 import TaskList from "./components/task-list/TaskList";
 import ReducerCounter from "./components/reducer/ReducerCounter";
 import TaskListWithReducer from "./components/reducer/task-list/TaskListWithReducer";
@@ -50,12 +50,12 @@ import TimerWithCleanUp from "./components/effect/TimerWithCleanUp";
 import TodoListWithFetch from "./components/effect/TodoListWithFetch";
 import FetchUser from "./components/hook/FetchUser";
 import FetchDemo from "./components/hook/FetchDemo";
-import withLogger from "./components/pattern/hoc/withLogger";
+// import withLogger from "./components/pattern/hoc/withLogger";
 import AuthDemo from "./components/pattern/hoc/AuthDemo";
 import ComposeDemo from "./components/pattern/hoc/ComposeDemo";
-import RenderPropertyDemo from "./components/pattern/render-property/RenderPropertyDemo";
+// import RenderPropertyDemo from "./components/pattern/render-property/RenderPropertyDemo";
 
-const CounterWithLogger = withLogger(Counter);
+// const CounterWithLogger = withLogger(Counter);
 
 export default function Home() {
   let profile1 = {
@@ -209,7 +209,7 @@ export default function Home() {
 
       {/* <KeyWithIndexProblem /> */}
 
-      {/* <SearchableProductTable /> */}
+      <SearchableProductTable />
 
       {/* <TaskList /> */}
 
@@ -251,7 +251,7 @@ export default function Home() {
 
       {/* <ComposeDemo /> */}
 
-      <RenderPropertyDemo />
+      {/* <RenderPropertyDemo /> */}
     </div>
   );
 }

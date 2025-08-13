@@ -1,8 +1,8 @@
-import classNames from "classnames";
 import { useState } from "react"
+import ProductCategoryRow from './ProductCategoryRow';
 
 let data = [
-  { category: "Fruits", price: "$1", stocked: true, name: "Apple" },
+  { category: "Fruits", price: "$1", stocked: false, name: "Apple" },
   { category: "Fruits", price: "$1", stocked: true, name: "Dragonfruit" },
   { category: "Fruits", price: "$2", stocked: false, name: "Passionfruit" },
   { category: "Vegetables", price: "$2", stocked: true, name: "Spinach" },
@@ -10,33 +10,6 @@ let data = [
   { category: "Vegetables", price: "$1", stocked: true, name: "Peas" },
   { category: "Another", price: "$1", stocked: true, name: "Another" }
 ]
-
-function ProductCategoryRow({ items }) {
-  return (
-    <div>
-      <h3>{items[0] && items[0].category}</h3>
-
-      {
-        items.map((item, index) => {
-          const itemClass = classNames({
-            "stocked": item.stocked
-          });
-
-          return (
-            <div key={`${item.name}-${index}`}>
-              <span className={itemClass}>
-                {item.name}&nbsp;
-              </span>
-              <span>{item.price}</span>
-            </div>
-          )
-        })
-      }
-      <br />
-
-    </div>
-  )
-}
 
 function getDistinctCategory(items) {
   const categories = items.map(item => item.category);
@@ -54,37 +27,38 @@ export default function SearchableProductTable() {
   //   filteredItems = filteredItems.filter(item => item.stocked);
   // }
 
-  const filteredItems = items.filter(item => {
-    const matchesSearch = item.name.toLowerCase().includes(searchText.toLowerCase());
-    const matchesStock = !inStock || item.stocked;
-    return matchesSearch && matchesStock;
-  });
-
   // const fruits = filteredItems.filter(item => item.category == "Fruits");
   //
   // const vegetables = filteredItems.filter(item => item.category == "Vegetables");
 
   const categories = getDistinctCategory(items);
 
-  const searchOnChangeHandler = (e) => {
+  const filteredItems = items.filter(item => {
+    const itemName = item.name.toLowerCase();
+    const matchesSearch = itemName.includes(searchText.toLowerCase());
+    const matchesInstock = !inStock || item.stocked;
+    return matchesSearch && matchesInstock;
+  });
+
+  const handleSearch = (e) => {
     setSearchText(e.target.value);
   }
 
-  const inStockOnChangeHandler = (e) => {
-    // console.log(e);
+  const handleInStock = (e) => {
+    console.log(e.target.checked);
     setInStock(e.target.checked);
-
   }
-  return (
-    <div>
-      <h2>Product Table</h2>
 
+  return (
+    <div style={{ maxWidth: 900, margin: "20px auto", padding: 10 }}>
+      <h2>Product Table</h2>
       <form>
         <div>
           <input
             type="text"
             value={searchText}
-            onChange={searchOnChangeHandler} />
+            placeholder='search product'
+            onChange={handleSearch} />
         </div>
 
         <div>
@@ -92,7 +66,7 @@ export default function SearchableProductTable() {
             <input
               type="checkbox"
               value={inStock}
-              onChange={inStockOnChangeHandler} />
+              onChange={handleInStock} />
             Only show product is instocked
           </label>
         </div>
