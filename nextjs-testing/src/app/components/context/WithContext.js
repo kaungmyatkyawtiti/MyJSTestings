@@ -1,5 +1,5 @@
 import ThemeContext from "./ThemeContext";
-import { useContext } from "react"
+import { useContext, useState } from "react"
 
 function Parent() {
   return (
@@ -20,21 +20,43 @@ function Child() {
 }
 
 function GrandChild() {
-  const theme = useContext(ThemeContext);
+  const { color } = useContext(ThemeContext);
 
   return (
-    <div style={{ color: theme.color }}>
+    <div style={{ color: color }}>
       GrandChild with Context
     </div>
   )
 }
 
 export default function WithContext() {
+  const [color, setColor] = useState("blue");
+
+  const handleChangeGreen = () => {
+    setColor("green");
+  }
+
+  const handleChangeRed = () => {
+    setColor("red");
+  }
+
   return (
-    <div>
-      <ThemeContext.Provider value={{ color: "blue" }}>
+    <ThemeContext.Provider value={{ color }}>
+      <>
+        <button
+          type='button'
+          onClick={handleChangeGreen}
+        >
+          Green
+        </button>
+        <button
+          type='button'
+          onClick={handleChangeRed}
+        >
+          Red
+        </button>
         <Parent />
-      </ThemeContext.Provider>
-    </div>
+      </>
+    </ThemeContext.Provider>
   )
 }

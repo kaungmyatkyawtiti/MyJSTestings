@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 export default function TaskItem({
   task,
@@ -8,23 +8,23 @@ export default function TaskItem({
   const [title, setTitle] = useState(task.title);
   const [editing, setEditing] = useState(false);
 
-  const onEditHandler = () => {
+  const handleEdit = () => {
     setEditing(!editing);
     if (editing) {
       const updateTask = {
         ...task,
-        title,
+        title
       }
       console.log("updateTask ", updateTask);
       onEdit(updateTask);
     }
   }
 
-  const onDeleteHandler = () => {
+  const handleDelete = () => {
     onDelete(task);
   }
 
-  const onTextChangeHandler = (e) => {
+  const handleTextChange = (e) => {
     setTitle(e.target.value);
   }
 
@@ -32,13 +32,13 @@ export default function TaskItem({
     <div>
       {
         editing
-          ? <input type="text" value={title} onChange={onTextChangeHandler} />
+          ? <input type="text" value={title} onChange={handleTextChange} />
           : title
       }
       &nbsp;
       <button
         type="button"
-        onClick={onEditHandler}>
+        onClick={handleEdit}>
         {
           !editing
             ? "Edit"
@@ -48,7 +48,8 @@ export default function TaskItem({
       &nbsp;
       <button
         type="button"
-        onClick={onDeleteHandler}>
+        onClick={handleDelete}
+      >
         Delete
       </button>
     </div>

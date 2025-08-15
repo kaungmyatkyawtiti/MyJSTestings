@@ -2,6 +2,7 @@
 //import Image from "next/image";
 //import styles from "./page.module.css";
 
+import TaskListWithReducer from './components/reducer/task-list/TaskListWithReducer';
 import Card from "./components/Card";
 // import Counter from "./components/counter/Counter";
 import CounterBatchUpdate from "./components/counter/CounterBatchUpdate";
@@ -37,7 +38,6 @@ import KeyWithIndexProblem from "./components/KeyWithIndexProblem";
 import SearchableProductTable from "./components/product-table/SearchableProductTable";
 import TaskList from "./components/task-list/TaskList";
 import ReducerCounter from "./components/reducer/ReducerCounter";
-import TaskListWithReducer from "./components/reducer/task-list/TaskListWithReducer";
 import WithoutContext from "./components/context/WithoutContext";
 import WithContext from "./components/context/WithContext";
 import TaskListWithContextReducer from "./components/context/task-list/TaskListWithContextReducer";
@@ -209,7 +209,7 @@ export default function Home() {
 
       {/* <KeyWithIndexProblem /> */}
 
-      <SearchableProductTable />
+      {/* <SearchableProductTable /> */}
 
       {/* <TaskList /> */}
 
@@ -221,7 +221,7 @@ export default function Home() {
 
       {/* <WithContext /> */}
 
-      {/* <TaskListWithContextReducer /> */}
+      <TaskListWithContextReducer />
 
       {/* <WhyRef /> */}
 

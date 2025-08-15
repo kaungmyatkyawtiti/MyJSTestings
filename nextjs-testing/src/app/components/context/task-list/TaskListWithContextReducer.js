@@ -1,22 +1,27 @@
-import { useContext, useReducer, useState } from "react";
-import { taskListReducer } from "../../reducer/task-list/TaskListWithReducer";
+import { useContext, useReducer } from "react";
+import taskListReducer from '../../reducer/task-list/taskListReducer';
 import TaskListContext from "./TaskListContext";
 import TaskListDispatcherContext from "./TaskListDispatcherContext";
 import TaskListCount from "./TaskListCount";
+import { v4 as uuidv4 } from 'uuid';
+import TaskItem from './TaskItem';
+import TaskEntry from './TaskEntry';
 
-let nextId = 3;
-
-let initState = [
-  { id: 1, title: "task 1", done: true },
-  { id: 2, title: "task 2", done: false },
-  { id: 3, title: "task 3", done: true },
+const initState = [
+  { id: uuidv4(), title: "task 1", done: true },
+  { id: uuidv4(), title: "task 2", done: false },
+  { id: uuidv4(), title: "task 3", done: true },
 ];
 
 function TaskList() {
   const tasks = useContext(TaskListContext);
 
   return (
-    <div>
+    <div
+      style={{
+        maxWidth: 900,
+        margin: "20px auto"
+      }}>
       <TaskListCount />
       <br />
 
@@ -34,112 +39,14 @@ function TaskList() {
   )
 }
 
-function newTask(title) {
-  return {
-    id: ++nextId,
-    title,
-    done: false,
-  }
-}
-
-export function TaskEntry() {
-  const dispatch = useContext(TaskListDispatcherContext);
-  const [title, setTitle] = useState("");
-
-  const onAddHandler = () => {
-    // onAdd(task);
-    const newOne = newTask(title);
-    dispatch({
-      type: "ADD_TODO",
-      payload: newOne,
-    })
-    setTitle("");
-  }
-
-  return (
-    <div>
-      <input
-        type="text"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)} />
-      &nbsp;
-      <button
-        type="button"
-        onClick={onAddHandler}>
-        Add
-      </button>
-    </div>
-  )
-}
-
-export function TaskItem({ task }) {
-  const dispatch = useContext(TaskListDispatcherContext);
-  const [title, setTitle] = useState(task.title);
-  const [editing, setEditing] = useState(false);
-
-  const onEditHandler = () => {
-    setEditing(!editing);
-    if (editing) {
-      const updateTask = {
-        ...task,
-        title,
-      }
-      // console.log("updateTask ", updateTask);
-      // onEdit(updateTask);
-      dispatch({
-        type: "UPDATE_TODO",
-        payload: updateTask,
-      })
-    }
-  }
-
-  const onDeleteHandler = () => {
-    // onDelete(task);
-    dispatch({
-      type: "DELETE_TODO",
-      payload: task,
-    })
-  }
-
-  const onTextChangeHandler = (e) => {
-    setTitle(e.target.value);
-  }
-
-  return (
-    <div>
-      {
-        editing
-          ? <input type="text" value={title} onChange={onTextChangeHandler} />
-          : title
-      }
-      &nbsp;
-      <button
-        type="button"
-        onClick={onEditHandler}>
-        {
-          !editing
-            ? "Edit"
-            : "Save"
-        }
-      </button>
-      &nbsp;
-      <button
-        type="button"
-        onClick={onDeleteHandler}>Delete</button>
-    </div>
-  )
-}
-
 export default function TaskListWithContextReducer() {
   const [tasks, dispatch] = useReducer(taskListReducer, initState);
 
   return (
-    <div>
-      <TaskListContext.Provider value={tasks}>
-        <TaskListDispatcherContext.Provider value={dispatch}>
-          <TaskList />
-        </TaskListDispatcherContext.Provider>
-      </TaskListContext.Provider>
-    </div>
+    <TaskListContext.Provider value={tasks}>
+      <TaskListDispatcherContext.Provider value={dispatch}>
+        <TaskList />
+      </TaskListDispatcherContext.Provider>
+    </TaskListContext.Provider>
   )
 }

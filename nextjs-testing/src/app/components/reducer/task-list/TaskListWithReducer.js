@@ -2,33 +2,14 @@ import { useReducer } from "react";
 import TaskItem from "./TaskItem";
 import TaskEntry from "./TaskEntry";
 import useCustomReducer from "../../hook/useCustomReducer";
+import taskListReducer from './taskListReducer';
+import { v4 as uuidv4 } from 'uuid';
 
-let nextId = 3;
-
-let initState = [
-  { id: 1, title: "task 1", done: true },
-  { id: 2, title: "task 2", done: false },
-  { id: 3, title: "task 3", done: true },
+const initState = [
+  { id: uuidv4(), title: "task 1", done: true },
+  { id: uuidv4(), title: "task 2", done: false },
+  { id: uuidv4(), title: "task 3", done: true },
 ];
-
-export function taskListReducer(state, action) {
-  switch (action.type) {
-    case "ADD_TODO":
-      return [...state, action.payload];
-    case "UPDATE_TODO":
-      return state.map(task => task.id == action.payload.id ? action.payload : task);
-    case "DELETE_TODO":
-      return state.filter(task => task.id !== action.payload.id);
-  }
-}
-
-const newTask = title => (
-  {
-    id: ++nextId,
-    title,
-    done: true,
-  }
-)
 
 export default function TaskListWithReducer() {
   // const [tasks, dispatch] = useReducer(taskListReducer, initState);
@@ -36,16 +17,20 @@ export default function TaskListWithReducer() {
 
   // console.log("tasks ", tasks);
 
-  const addTaskHandler = addTask => {
+  const handleAddTask = addTask => {
     // console.log("onAdd from parent", addTask);
-    const newOne = newTask(addTask);
+    const newOne = {
+      id: uuidv4(),
+      title: addTask,
+      done: true,
+    }
     dispatch({
       type: "ADD_TODO",
       payload: newOne,
     })
   }
 
-  const editTaskHandler = updateTask => {
+  const handleEditTask = updateTask => {
     // console.log("onEdit from parent", updateTask);
     dispatch({
       type: "UPDATE_TODO",
@@ -53,7 +38,7 @@ export default function TaskListWithReducer() {
     })
   }
 
-  const deleteTaskHandler = deleteTask => {
+  const handleDeleteTask = deleteTask => {
     // console.log("onDelete from parent", deleteTask);
     dispatch({
       type: "DELETE_TODO",
@@ -62,11 +47,11 @@ export default function TaskListWithReducer() {
   }
 
   return (
-    <div>
+    <div style={{ maxWidth: 900, margin: "20px auto" }}>
       <h3>TaskList</h3>
       <br />
 
-      <TaskEntry onAdd={addTaskHandler} />
+      <TaskEntry onAdd={handleAddTask} />
       <br />
 
       {
@@ -74,8 +59,8 @@ export default function TaskListWithReducer() {
           <TaskItem
             key={task.id}
             task={task}
-            onEdit={editTaskHandler}
-            onDelete={deleteTaskHandler} />
+            onEdit={handleEditTask}
+            onDelete={handleDeleteTask} />
         )
       }
     </div>
