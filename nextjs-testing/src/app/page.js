@@ -53,6 +53,7 @@ import FetchDemo from "./components/hook/FetchDemo";
 // import withLogger from "./components/pattern/hoc/withLogger";
 import AuthDemo from "./components/pattern/hoc/AuthDemo";
 import ComposeDemo from "./components/pattern/hoc/ComposeDemo";
+import FlyOutDemo from './components/pattern/compound/FlyOutDemo';
 // import RenderPropertyDemo from "./components/pattern/render-property/RenderPropertyDemo";
 
 // const CounterWithLogger = withLogger(Counter);
@@ -249,8 +250,9 @@ export default function Home() {
 
       {/* <AuthDemo /> */}
 
-      <ComposeDemo />
+      {/* <ComposeDemo /> */}
 
+      <FlyOutDemo />
       {/* <RenderPropertyDemo /> */}
     </div>
   );
