@@ -221,7 +221,7 @@ export default function Home() {
 
       {/* <WithContext /> */}
 
-      <TaskListWithContextReducer />
+      {/* <TaskListWithContextReducer /> */}
 
       {/* <WhyRef /> */}
 
@@ -249,7 +249,7 @@ export default function Home() {
 
       {/* <AuthDemo /> */}
 
-      {/* <ComposeDemo /> */}
+      <ComposeDemo />
 
       {/* <RenderPropertyDemo /> */}
     </div>

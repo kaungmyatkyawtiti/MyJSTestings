@@ -3,7 +3,7 @@ import { useRef } from "react";
 export default function FocusDemo() {
   const inputRef = useRef(null);
 
-  function handleClick() {
+  const handleClick = () => {
     inputRef.current.focus();
   }
 

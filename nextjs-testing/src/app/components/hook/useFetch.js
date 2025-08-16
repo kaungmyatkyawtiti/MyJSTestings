@@ -7,19 +7,18 @@ export default function useFetch(url) {
   useEffect(() => {
     const fetchData = async () => {
       console.log("effect run");
-      setLoading(true);     // ⏳ Start spinner
-      try {     // 🌐 Try to fetch data
+      setLoading(true);
+      try {
         const resp = await fetch(url);
         const json = await resp.json();
         console.log("json ", json);
         setData(json);
-      } catch (error) {     // ❌ If fetch fails, show an error
-        console.log("todos fetch is failed ", error);
-      } finally {     // ✅ Always stop the spinner
+      } catch (error) {
+        console.log("fetching is failed ", error);
+      } finally {     // always stop the spinner
         setLoading(false);
       }
     }
-
     fetchData();
   }, [url]);
 
