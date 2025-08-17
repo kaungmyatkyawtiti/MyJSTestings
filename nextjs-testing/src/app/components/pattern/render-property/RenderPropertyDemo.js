@@ -4,7 +4,9 @@ function ListItem({ items, render }) {
       {
         items.map((item, index) =>
           <div key={index}>
-            {render(item)}
+            {
+              render(item)
+            }
           </div>
         )
       }
@@ -12,7 +14,7 @@ function ListItem({ items, render }) {
   )
 }
 
-function renderDiv(item) {
+function RenderWithDiv(item) {
   return (
     <div>
       {item}
@@ -20,11 +22,13 @@ function renderDiv(item) {
   )
 }
 
-function renderHeader(item) {
+function RenderWithList(item) {
   return (
-    <h4>
-      {item}
-    </h4>
+    <ul>
+      <li>
+        {item}
+      </li>
+    </ul>
   )
 }
 
@@ -32,11 +36,16 @@ export default function RenderPropertyDemo() {
   let items = ["Apple", "Orange", "Banana"];
 
   return (
-    <div>
+    <div style={{ maxWidth: 800, margin: "20px auto" }}>
       <h3>Demo</h3>
+
       <ListItem
         items={items}
-        render={renderHeader} />
+        render={RenderWithList} />
+
+      <ListItem
+        items={items}
+        render={RenderWithDiv} />
     </div>
   )
 }

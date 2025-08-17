@@ -48,6 +48,7 @@ export default function SearchableProductTable() {
     const product = productRef.current.value;
     console.log(product);
     setSearchText(product);
+
     e.currentTarget.reset();
     document.activeElement?.blur();
   }

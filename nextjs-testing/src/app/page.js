@@ -56,6 +56,9 @@ import ComposeDemo from "./components/pattern/hoc/ComposeDemo";
 import FlyOutDemo from './components/pattern/compound/FlyOutDemo';
 import CustomCounter from './components/pattern/hooks/CustomCounter';
 import CustomWidhtShowDemo from './components/pattern/hooks/CustomWidthShowDemo';
+import DogImgContainer from './components/pattern/container-presentation/DogImgContainer';
+import RenderPropertyDemo from './components/pattern/render-property/RenderPropertyDemo';
+import TempConverter from './components/pattern/render-property/TempConveter';
 // import RenderPropertyDemo from "./components/pattern/render-property/RenderPropertyDemo";
 
 // const CounterWithLogger = withLogger(Counter);
@@ -258,9 +261,14 @@ export default function Home() {
 
       {/* <CustomCounter /> */}
 
-      <CustomWidhtShowDemo />
+      {/* <CustomWidhtShowDemo /> */}
 
-      {/* <RenderPropertyDemo /> */}
+      {/* <DogImgContainer /> */}
+
+      <RenderPropertyDemo />
+
+      {/* <TempConverter /> */}
+
     </div>
   );
 }
