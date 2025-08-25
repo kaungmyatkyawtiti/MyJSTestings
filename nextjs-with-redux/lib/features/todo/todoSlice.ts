@@ -1,8 +1,9 @@
 import { createAppSlice } from "@/lib/createAppSlice";
 import { PayloadAction } from "@reduxjs/toolkit"
+import { v4 as uuidv4 } from 'uuid';
 
 export interface TodoModel {
-  id: number,
+  id: string,
   title: string,
   completed: boolean,
 }
@@ -14,17 +15,17 @@ export interface TodoState {
 const initialState: TodoState = {
   todos: [
     {
-      id: 1,
+      id: uuidv4(),
       title: "Todo 1",
       completed: false,
     },
     {
-      id: 2,
+      id: uuidv4(),
       title: "Todo 2",
       completed: false,
     },
     {
-      id: 3,
+      id: uuidv4(),
       title: "Todo 3",
       completed: true,
     },
@@ -39,11 +40,17 @@ export const todoSlice = createAppSlice({
       state.todos.push(action.payload);
     }),
     updateTodo: create.reducer((state, action: PayloadAction<TodoModel>) => {
-      state.todos = state.todos.map(todo => todo.id == action.payload.id ? action.payload : todo);
+      state.todos = state.todos.map(todo =>
+        todo.id == action.payload.id
+          ? action.payload
+          : todo
+      );
     }),
     deleteTodo: create.reducer((state, action: PayloadAction<TodoModel>) => {
       // console.log("before delete", state.todos);
-      state.todos = state.todos.filter(todo => todo.id != action.payload.id);
+      state.todos = state.todos.filter(todo =>
+        todo.id != action.payload.id
+      );
       // console.log("after delete", state.todos);
     }),
     loadAllTodos: create.asyncThunk(
@@ -73,6 +80,14 @@ export const todoSlice = createAppSlice({
   }
 })
 
-export const { addTodo, updateTodo, deleteTodo, loadAllTodos } = todoSlice.actions;
+export const {
+  addTodo,
+  updateTodo,
+  deleteTodo,
+  loadAllTodos
+} = todoSlice.actions;
 
-export const { selectTodo, selectAllCompletedTodo } = todoSlice.selectors;
+export const {
+  selectTodo,
+  selectAllCompletedTodo
+} = todoSlice.selectors;

@@ -14,7 +14,7 @@ interface ApiResponse<T> {
 }
 
 export const todoApiSlice = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3000/api" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8080/api" }),
 
   reducerPath: "todoApi",
 
@@ -24,11 +24,14 @@ export const todoApiSlice = createApi({
     getAllTodos: build.query<Todo[], void>({
       query: () => `/todos`,
       providesTags: ['Todo'],
-      transformResponse: (response: ApiResponse<Todo[]>, meta, arg) => response.data,
+      transformResponse: (response: ApiResponse<Todo[]>, meta, arg) => {
+        console.log("transform to", response);
+        return response.data;
+      },
     }),
     getTodoById: build.query<Todo, number>({
       query: (id: number) => `/todos/${id}`,
-      transformResponse: (response: ApiResponse<Todo>, meta, arg) => response.data,
+      transformResponse: (response: ApiResponse<Todo>) => response.data,
     }),
     saveTodo: build.mutation<Todo, NewTodo>({
       query: (todo: Todo) => ({
@@ -37,7 +40,7 @@ export const todoApiSlice = createApi({
         body: todo,
       }),
       invalidatesTags: ['Todo'],
-      transformResponse: (response: ApiResponse<Todo>, meta, arg) => response.data,
+      transformResponse: (response: ApiResponse<Todo>) => response.data,
     }),
     updateTodoById: build.mutation<Todo, Todo>({
       query: (todo: Todo) => ({
@@ -46,7 +49,7 @@ export const todoApiSlice = createApi({
         body: todo,
       }),
       invalidatesTags: ['Todo'],
-      transformResponse: (response: ApiResponse<Todo>, meta, arg) => response.data,
+      transformResponse: (response: ApiResponse<Todo>) => response.data,
     }),
     deleteTodoById: build.mutation<Todo, number>({
       query: (todoId: number) => ({
@@ -54,7 +57,7 @@ export const todoApiSlice = createApi({
         method: "DELETE",
       }),
       invalidatesTags: ['Todo'],
-      transformResponse: (response: ApiResponse<Todo>, meta, arg) => response.data,
+      transformResponse: (response: ApiResponse<Todo>) => response.data,
     })
   }),
 })

@@ -117,18 +117,6 @@ function TodoApiList({ todos }: TodoListApiProp) {
 export default function TodoListWithRTKQuery() {
   const { data, isError, isLoading, isSuccess } = useGetAllTodosQuery();
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (isError) {
-    return <div>Error loading todos. Please try again.</div>;
-  }
-
-  if (isSuccess && data?.length === 0) {
-    return <p>No movies found.</p>;
-  }
-
   console.log("api data", data);
 
   return (
@@ -136,7 +124,17 @@ export default function TodoListWithRTKQuery() {
       TodoListWithRTKQuery
       <TaskEntry />
       {
-        data && <TodoApiList todos={data} />
+        isLoading && <div>Loading...</div>
+      }
+      {
+        isError && <div>Error loading todos. Please try again.</div>
+      }
+      {
+        data && isSuccess && (
+          data?.length === 0
+            ? <p>No movies found.</p>
+            : <TodoApiList todos={data} />
+        )
       }
     </div>
   )

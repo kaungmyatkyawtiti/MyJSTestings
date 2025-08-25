@@ -4,6 +4,7 @@ import { addTodo, deleteTodo, loadAllTodos, selectAllCompletedTodo, selectTodo, 
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import React, { useEffect, useState } from "react";
 import CompletedTodoListCount from "./CompletedTodoListCount";
+import { v4 as uuidv4 } from 'uuid';
 
 type TodoListProp = {
   todo: TodoModel
@@ -70,7 +71,6 @@ function TaskItem({ todo }: TodoListProp) {
   )
 }
 
-let id = 3;
 export function TaskEntry() {
   const dispatch = useAppDispatch();
   const [task, setTask] = useState('');
@@ -78,7 +78,7 @@ export function TaskEntry() {
   const addHandler = () => {
     console.log('on add task ', task);
     let newTodo: TodoModel = {
-      id: ++id,
+      id: uuidv4(),
       title: task,
       completed: false,
     }

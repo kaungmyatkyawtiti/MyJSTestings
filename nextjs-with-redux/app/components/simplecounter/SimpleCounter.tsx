@@ -1,6 +1,6 @@
 'use client';
 
-import { dec, inc, incAmountAfterSecond, selectCounter } from "@/lib/features/simplecounter/simpleCounterSlice";
+import { dec, inc, incAfterOneSecond, incAmountAfterSecond, selectCounter } from "@/lib/features/simplecounter/simpleCounterSlice";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 
 export default function SimpleCounter() {
@@ -24,6 +24,11 @@ export default function SimpleCounter() {
     dispatch(incAmountAfterSecond(10));
   }
 
+  const handleThunk = () => {
+    console.log("handleThunk");
+    dispatch(incAfterOneSecond(10));
+  }
+
   return (
     <div>
       SimpleCounter {count}&nbsp;
@@ -41,6 +46,11 @@ export default function SimpleCounter() {
         type="button"
         onClick={thunkHandler}>
         fire thunk
+      </button>
+      <button
+        type="button"
+        onClick={handleThunk}>
+        thunk click
       </button>
     </div>
   )

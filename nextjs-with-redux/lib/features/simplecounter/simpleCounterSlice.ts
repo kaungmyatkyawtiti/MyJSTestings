@@ -1,3 +1,4 @@
+import { createAppSlice } from '@/lib/createAppSlice';
 import { AppThunk } from "@/lib/store";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit"
 
@@ -11,7 +12,7 @@ const initialState: SimpleCounterState = {
 }
 
 // slice 
-export const simpleCounterSlice = createSlice({
+export const simpleCounterSlice = createAppSlice({
   name: "simpleCounter",
   initialState,
   reducers: (create) => ({
@@ -29,7 +30,23 @@ export const simpleCounterSlice = createSlice({
     }),
     incByAmount: create.reducer((state, action: PayloadAction<number>) => {
       state.count += action.payload;
-    },),
+    }),
+    incAfterOneSecond: create.asyncThunk(
+      async (amount: number) => {
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        console.log("Fired thunk");
+        return amount;
+      },
+      {
+        pending: (state) => {
+        },
+        fulfilled: (state, action) => {
+          state.count += action.payload;
+        },
+        rejected: (state) => {
+        },
+      },
+    )
   }),
   selectors: {
     selectCounter: state => state.count,
@@ -37,7 +54,12 @@ export const simpleCounterSlice = createSlice({
 })
 
 // export actions
-export const { inc, dec, incByAmount } = simpleCounterSlice.actions;
+export const {
+  inc,
+  dec,
+  incByAmount,
+  incAfterOneSecond
+} = simpleCounterSlice.actions;
 
 // export selectors
 export const { selectCounter } = simpleCounterSlice.selectors;
