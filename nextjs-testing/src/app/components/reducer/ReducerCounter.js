@@ -7,16 +7,18 @@ let initState = {
 
 function counterReducer(state, action) {
   switch (action.type) {
-    case "INC":
+    case "INC": {
       return {
         ...state,
         counter: state.counter + 1,
       }
-    case "DEC":
+    }
+    case "DEC": {
       return {
         ...state,
         counter: state.counter - 1,
       }
+    }
     default:
       return state;
   }
