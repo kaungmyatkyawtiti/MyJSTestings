@@ -2,6 +2,7 @@
 
 import { NewTodo, Todo, useDeleteTodoByIdMutation, useGetAllTodosQuery, useSaveTodoMutation, useUpdateTodoByIdMutation } from "@/lib/features/todo-api/todoApiSlice"
 import { useState } from "react";
+import { KeyboardEvent } from 'react';
 
 type TodoListApiProp = {
   todos: Todo[],
@@ -12,7 +13,7 @@ type TodoItemProp = {
 }
 
 function handleEnterKey(
-  e: React.KeyboardEvent<HTMLInputElement>,
+  e: KeyboardEvent<HTMLInputElement>,
   callback: () => void
 ) {
   if (e.key === "Enter") {
@@ -132,7 +133,7 @@ export default function TodoListWithRTKQuery() {
       {
         data && isSuccess && (
           data?.length === 0
-            ? <p>No movies found.</p>
+            ? <p>No todos found.</p>
             : <TodoApiList todos={data} />
         )
       }

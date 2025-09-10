@@ -21,8 +21,8 @@ export default function IndexPage() {
       {/* <CallBackDemo /> */}
       {/* <AcceptElementDemo /> */}
       {/* <SimpleCounter /> */}
-      <TodoListWithRedux />
-      {/* <TodoListWithRTKQuery /> */}
+      {/* <TodoListWithRedux /> */}
+      <TodoListWithRTKQuery />
     </div>
   )
 }
