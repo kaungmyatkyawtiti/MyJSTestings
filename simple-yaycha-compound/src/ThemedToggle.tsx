@@ -3,13 +3,13 @@ import { faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
 import { useContext } from 'react';
 import ThemedContext from './ThemedContext';
 
-interface ThemeLayoutProps {
+interface ThemedToggleProps {
   children: React.ReactNode;
 }
 
 export default function ThemedToggle({
   children
-}: ThemeLayoutProps) {
+}: ThemedToggleProps) {
   const { mode, setMode } = useContext(ThemedContext);
 
   const handleMode = () => {

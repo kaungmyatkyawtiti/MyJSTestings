@@ -6,7 +6,7 @@ export default function CustomTab({ headers, children }) {
   // console.log("styles ", styles);
   let [current, setCurrent] = useState(0);
 
-  const tabHeaderClickHandler = (index) => {
+  const handleTab = (index) => {
     setCurrent(index);
   }
 
@@ -22,7 +22,7 @@ export default function CustomTab({ headers, children }) {
           return (
             <span
               key={index}
-              onClick={() => tabHeaderClickHandler(index)}
+              onClick={() => handleTab(index)}
               className={tabHeaderClass}>
               {header}
             </span>

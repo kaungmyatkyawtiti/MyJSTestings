@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import ThemedContext from './ThemedContext';
 
-interface ThemedAppProps {
+interface ThemedWrapperProps {
   children: React.ReactNode;
 }
 
-export default function ThemedWrapper({ children }: ThemedAppProps) {
+export default function ThemedWrapper({ children }: ThemedWrapperProps) {
   const [mode, setMode] = useState("dark");
 
   return (

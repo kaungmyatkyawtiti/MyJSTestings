@@ -191,19 +191,19 @@ export default function Home() {
 
       {/* <TodoList /> */}
 
-      {/* <CustomTab headers={tabs}> */}
-      {/*   <div> */}
-      {/*     <h1>Tab 1</h1> */}
-      {/*   </div> */}
-      {/**/}
-      {/*   <div> */}
-      {/*     <h1>Tab 2</h1> */}
-      {/*   </div> */}
-      {/**/}
-      {/*   <div> */}
-      {/*     <h1>Tab 3</h1> */}
-      {/*   </div> */}
-      {/* </CustomTab> */}
+      <CustomTab headers={tabs}>
+        <div>
+          <h1>Tab 1</h1>
+        </div>
+
+        <div>
+          <h1>Tab 2</h1>
+        </div>
+
+        <div>
+          <h1>Tab 3</h1>
+        </div>
+      </CustomTab>
 
       {/* <CounterConditional /> */}
 
@@ -265,7 +265,7 @@ export default function Home() {
 
       {/* <DogImgContainer /> */}
 
-      <RenderPropertyDemo />
+      {/* <RenderPropertyDemo /> */}
 
       {/* <TempConverter /> */}
 
