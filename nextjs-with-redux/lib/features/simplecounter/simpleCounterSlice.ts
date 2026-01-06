@@ -1,6 +1,6 @@
 import { createAppSlice } from '@/lib/createAppSlice';
 import { AppThunk } from "@/lib/store";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit"
+import { PayloadAction } from "@reduxjs/toolkit"
 
 export interface SimpleCounterState {
   count: number,

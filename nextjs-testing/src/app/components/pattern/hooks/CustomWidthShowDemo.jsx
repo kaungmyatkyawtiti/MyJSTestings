@@ -8,9 +8,10 @@ function useCustomWidth() {
 
   useEffect(() => {
     const handleResize = () => setWidth(window.innerWidth);
-    handleResize();
 
     window.addEventListener("resize", handleResize);
+
+    handleResize();
 
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -18,7 +19,7 @@ function useCustomWidth() {
   return width;
 }
 
-export default function CustomWidhtShowDemo() {
+export default function CustomWidthShowDemo() {
   const width = useCustomWidth();
 
   return (

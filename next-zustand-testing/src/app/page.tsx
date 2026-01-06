@@ -9,8 +9,8 @@ export default function Home() {
     <Box className={styles.page}>
       {/* <CounterUI /> */}
 
-      {/* <TodoList /> */}
-      <AlertWrapper />
+      <TodoList />
+      {/* <AlertWrapper /> */}
     </Box>
   );
 }

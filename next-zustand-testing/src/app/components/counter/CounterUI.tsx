@@ -5,7 +5,7 @@ import Count from "./Count";
 import { useBoundStore } from "@/stores/useBoundStore";
 
 export default function CounterUI() {
-  const { count, dec, inc } = useBoundStore();
+  const { count, dec, inc, reset } = useBoundStore();
 
   return (
     <Box>
@@ -19,6 +19,12 @@ export default function CounterUI() {
         variant="contained"
         onClick={dec}>
         dec
+      </Button>
+      <Button
+        variant="contained"
+        onClick={reset}
+      >
+        reset
       </Button>
     </Box>
   )

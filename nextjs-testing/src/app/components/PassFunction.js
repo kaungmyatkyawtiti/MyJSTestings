@@ -27,3 +27,36 @@ export default function PassFunction() {
     </div>
   )
 }
+
+// Parent component
+// import { useState } from "react";
+// import Child from "./Child";
+//
+// export function Parent() {
+//   const [message, setMessage] = useState("");
+//
+//   // Callback function passed to child
+//   const handleMessage = (childData) => {
+//     setMessage(childData);
+//   };
+//
+//   return (
+//     <div>
+//       <h1>Message from child: {message}</h1>
+//       <Child sendMessage={handleMessage} />
+//     </div>
+//   );
+// }
+//
+// // Child component
+// function Child({ sendMessage }) {
+//   const sendDataToParent = () => {
+//     sendMessage("Hello from child!");
+//   };
+//
+//   return (
+//     <button onClick={sendDataToParent}>Send Message</button>
+//   );
+// }
+//
+// export default Child;

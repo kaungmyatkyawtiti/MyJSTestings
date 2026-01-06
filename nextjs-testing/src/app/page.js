@@ -55,10 +55,10 @@ import AuthDemo from "./components/pattern/hoc/AuthDemo";
 import ComposeDemo from "./components/pattern/hoc/ComposeDemo";
 import FlyOutDemo from './components/pattern/compound/FlyOutDemo';
 import CustomCounter from './components/pattern/hooks/CustomCounter';
-import CustomWidhtShowDemo from './components/pattern/hooks/CustomWidthShowDemo';
 import DogImgContainer from './components/pattern/container-presentation/DogImgContainer';
 import RenderPropertyDemo from './components/pattern/render-property/RenderPropertyDemo';
 import TempConverter from './components/pattern/render-property/TempConveter';
+import CustomWidthShowDemo from './components/pattern/hooks/CustomWidthShowDemo';
 // import RenderPropertyDemo from "./components/pattern/render-property/RenderPropertyDemo";
 
 // const CounterWithLogger = withLogger(Counter);
@@ -174,7 +174,7 @@ export default function Home() {
 
       {/* <StateObject /> */}
 
-      {/* <PassFunction /> */}
+      <PassFunction />
       {/* <EventPropagation /> */}
 
       {/* <Timer /> */}
@@ -191,19 +191,19 @@ export default function Home() {
 
       {/* <TodoList /> */}
 
-      <CustomTab headers={tabs}>
-        <div>
-          <h1>Tab 1</h1>
-        </div>
-
-        <div>
-          <h1>Tab 2</h1>
-        </div>
-
-        <div>
-          <h1>Tab 3</h1>
-        </div>
-      </CustomTab>
+      {/* <CustomTab headers={tabs}> */}
+      {/*   <div> */}
+      {/*     <h1>Tab 1</h1> */}
+      {/*   </div> */}
+      {/**/}
+      {/*   <div> */}
+      {/*     <h1>Tab 2</h1> */}
+      {/*   </div> */}
+      {/**/}
+      {/*   <div> */}
+      {/*     <h1>Tab 3</h1> */}
+      {/*   </div> */}
+      {/* </CustomTab> */}
 
       {/* <CounterConditional /> */}
 
@@ -261,8 +261,7 @@ export default function Home() {
 
       {/* <CustomCounter /> */}
 
-      {/* <CustomWidhtShowDemo /> */}
-
+      {/* <CustomWidthShowDemo /> */}
       {/* <DogImgContainer /> */}
 
       {/* <RenderPropertyDemo /> */}

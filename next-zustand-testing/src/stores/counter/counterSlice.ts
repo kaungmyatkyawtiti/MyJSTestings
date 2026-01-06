@@ -1,6 +1,6 @@
 // import { produce } from "immer";
 import { StateCreator } from "zustand";
-import { BoundSlice } from "../useBoundStore";
+import { BoundStore } from "../useBoundStore";
 
 export interface CounterState {
   count: number;
@@ -9,44 +9,37 @@ export interface CounterState {
 export interface CounterActions {
   dec: () => void;
   inc: () => void;
+  reset: () => void;
 }
 
-export type CounterSlice = CounterState & CounterActions;
+export type CounterSlice = CounterState & CounterActions
 
-export const defaultInitState: CounterState = {
-  count: 0,
+export const initState: CounterState = {
+  count: 0
 }
 
-// with immer middleware
-export type ImmerStateCreator<C, T> = StateCreator<
-  C,
-  // [["zustand/immer", never], never],
+export const createCounterSlice: StateCreator<
+  BoundStore,
   [["zustand/immer", never], ["zustand/devtools", never]],
   [],
-  T
->;
-
-export const createCounterSlice: ImmerStateCreator<
-  BoundSlice,
   CounterSlice
 > = (set) => ({
-  ...defaultInitState,
+  ...initState,
   dec: () =>
-    set(
-      (state) => {
-        state.count--
-      },
+    set((state) => { state.count-- },
       undefined,
       "count/dec"
     ),
   inc: () =>
-    set(
-      (state) => {
-        state.count++
-      },
+    set((state) => { state.count++ },
       undefined,
       "count/inc"
-    )
+    ),
+  reset: () =>
+    set((state) => { state.count = initState.count },
+      undefined,
+      "count/reset"
+    ),
 });
 
 // export const useCounterStore = create<CounterStore>((set) => ({

@@ -1,8 +1,6 @@
 // import { produce } from "immer";
 import { StateCreator } from "zustand";
-import { BoundSlice } from "../useBoundStore";
-// import { immer } from "zustand/middleware/immer";
-// import { BoundSlice } from "../useBoundStore";
+import { BoundStore } from "../useBoundStore";
 import { v4 as uuidv4 } from 'uuid';
 
 export interface Todo {
@@ -39,17 +37,10 @@ export const defaultInitState: TodoState = {
   ]
 }
 
-// with immer middleware
-export type ImmerStateCreator<C, T> = StateCreator<
-  C,
-  // [["zustand/immer", never], never],
+export const createTodoSlice: StateCreator<
+  BoundStore,
   [["zustand/immer", never], ["zustand/devtools", never]],
   [],
-  T
->;
-
-export const createTodoSlice: ImmerStateCreator<
-  BoundSlice,
   TodoSlice
 > = (set) => ({
   ...defaultInitState,
@@ -57,12 +48,11 @@ export const createTodoSlice: ImmerStateCreator<
   loadAllTodos: async () => {
     try {
       const resp = await fetch("https://jsonplaceholder.typicode.com/todos");
-      const data: Todo[] = await resp.json();
+      const data = await resp.json();
 
-      set(
-        (state) => {
-          state.todos = data;
-        },
+      set((state) => {
+        state.todos = data;
+      },
         undefined,
         "todos/loadTodos"
       );
@@ -72,31 +62,30 @@ export const createTodoSlice: ImmerStateCreator<
   },
   // addTodo
   addTodo: (todo: Todo) =>
-    set(
-      (state) => {
-        state.todos.unshift(todo)
-      },
+    set((state) => {
+      state.todos.unshift(todo)
+    },
       undefined,
       "todos/addTodo"
     ),
   // deleteTodo
   deleteTodo: (todoId: string) =>
-    set(
-      (state) => {
-        state.todos = state.todos.filter((todo: Todo) => todo.id !== todoId);
-      },
+    set((state) => {
+      const target = state.todos.findIndex(todo => todo.id === todoId);
+      state.todos.splice(target, 1);
+      // state.todos = state.todos.filter((todo: Todo) => todo.id !== todoId);
+    },
       undefined,
       "todos/deleteTodo"
     ),
   // updateTodo
   updateTodo: (updated: Todo) =>
-    set(
-      (state) => {
-        const target = state.todos.find((todo: Todo) => todo.id === updated.id);
-        if (target) {
-          Object.assign(target, updated);
-        }
-      },
+    set((state) => {
+      const target = state.todos.find(todo => todo.id === updated.id);
+      if (target) {
+        Object.assign(target, updated);
+      }
+    },
       undefined,
       "todos/updateTodo"
     ),

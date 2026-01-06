@@ -32,7 +32,8 @@ function TaskList() {
         tasks.map(task =>
           <TaskItem
             key={task.id}
-            task={task} />
+            task={task}
+          />
         )
       }
     </div>
